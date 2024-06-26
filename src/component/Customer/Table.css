@@ -1,0 +1,16 @@
+.delbtn{
+ margin-left: 2rem;
+ width: 10%;
+ padding: 7px;
+ background-color: red;
+ border: none;
+ border-radius: 5px;
+}
+.edtbtn{
+  margin-left: 2rem;
+ width: 10%;
+ padding: 7px;
+ background-color: rgb(0, 255, 51);
+ border: none;
+ border-radius: 5px;
+}
