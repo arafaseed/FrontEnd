@@ -1,13 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Navigation from '../Admin/Navigation.';
 import Header from '../Header';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
 import PopFormCust from './PopFormCust';
 
 const CustomerList = () => {
+  const [data, setData] = useState([]);
+    useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/getAllCustomer'); 
+      setData(response.data);
+    } catch (error) {
+      console.log('Error fetching data:', error);
+    }
+  };
+
 
   const [showModal, setShowModal] = useState(false);
- const handleAddButton =() =>{
+  const handleAddButton =() =>{
   setShowModal(true);
  } 
  const handleAddModalClose =() =>{
@@ -29,26 +43,33 @@ const CustomerList = () => {
   </div>
 
   <table className='table'>
-    <tr>
-      <th>Name</th>
-      <th>Gender</th>
-      <th>Address</th>
-      <th>ZanzibarID</th>
-      <th>Phone</th>
-      <th>Action</th>
-    </tr>
-    <tr>
-      <td>Peter</td>
-      <td>Griffin</td>
-      <td>$100</td>
-      <td>Griffin</td>
-      <td>$100</td>
+  <thead>
+              
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Gender</th>
+                  <th>Address</th>
+                  <th>ZanzibarID</th>
+                  <th>Phone</th>
+                  <th>Actions</th>
+               
+              </thead>
+   <tbody> 
+   {data.map((item, index) => (
+                  <tr key={item.Cust_id}>
+                    <td>{index + 1}</td>
+                    <td>{item.name}</td>
+                    <td>{item.gender}</td>
+                    <td>{item.address}</td>
+                    <td>{item.zan_id}</td>
+                    <td>{item.phone}</td>
       <td>
-      <i class="fas fa-trash"></i>
-      <i class="fas fa-edit"></i>
-      
-      </td>
-      </tr>     
+      <button className='delbtn' ><i class="fa fa-trash"></i></button>
+      <button className='edtbtn' ><i class="fa fa-pencil"></i></button>
+      </td> 
+      </tr> 
+   ))}</tbody>
+       
    
   </table>
  
@@ -59,4 +80,4 @@ const CustomerList = () => {
     </div>
   )
 }
-export default CustomerList;                                                                                                                                                       vvcncnbncbnbcnncbcbnnbccnbncn
+export default CustomerList;                                                     

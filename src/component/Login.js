@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import PopFormCust from './Customer/PopFormCust';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [data, setData] = useState('');
+  const [userId, setUserId] = useState(0); // added userId state
   const navigate = useNavigate();
+
+  const handleAddButton = () => {
+    setShowModal(true);
+  }
+  const handleAddModalClose = () => {
+    setShowModal(false);
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,13 +42,41 @@ const Login = () => {
       // Store the role name and username in the local storage
       localStorage.setItem('role', data.role);
       localStorage.setItem('username', data.username);
+      localStorage.setItem('userID', data.userID)
+
+      setUserId(data.userID); // update userId state
+
+      const userID = data.userID;
+      // console.log(userID);
+
+      // Make API call to second API with userId
+      axios.get(`http://localhost:8080/customer/userId/${userID}`)
+        .then((response) => {
+          setData(response.data);
+          console.log(response.data);
+          localStorage.setItem('customerId', response.data.cust_id);
+          // console.log(response.data.Cust_id);
+        })
 
       // Redirect to the desired page after successful login
-      navigate('/dashbord');
+      // navigate('/dashbord');
+
+      if (data.role === 'Admin') {
+        navigate('/dashbord')
+      }
+
+      if (data.role === 'Staff') {
+        navigate('/staffdash')
+      }
+
+      if (data.role === 'Customer') {
+        navigate('/customeDashbord')
+      }
     } catch (error) {
       setError('Invalid username or password');
       console.error('login error', error);
     }
+
   };
 
   return (
@@ -71,9 +110,10 @@ const Login = () => {
         </div>
         {error && <p>{error}</p>}
       </form>
-     
-      <div>Don't have account:<Link to="/addCustomer">Sign-up</Link></div>
-      
+
+      Don't have account:<a className='arafa' onClick={handleAddButton}>SIGN-UP</a>
+
+      <PopFormCust showModal={showModal} handleModalClose={handleAddModalClose} />
     </div>
   );
 };

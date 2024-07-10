@@ -10,11 +10,10 @@ import Navigation from '../Admin/Navigation.';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal,Button } from 'react-bootstrap';
 
-export const PopFormCust = ({ showModal, handleModalClose }) => {
+export const PopStaffForm = ({ showModal, handleModalClose }) => {
 
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
-  const [zanId, setZanId] = useState('');
   const [gender, setGender] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
@@ -27,12 +26,11 @@ export const PopFormCust = ({ showModal, handleModalClose }) => {
       userID: 0,
       username: username,
       password: password,
-      role: "Customer",
+      role: "Staff",
       status: "ACTIVE"
     };
-    const customerRequest = {
+    const staffRequest = {
       name: name,
-      zan_id: zanId,
       gender: gender,
       phone: phone,
       userId: 0,
@@ -40,10 +38,10 @@ export const PopFormCust = ({ showModal, handleModalClose }) => {
     };
     const requestData = {
       loginRequest,
-      customerRequest
+      staffRequest
     };
     console.log('Request data:', requestData);
-    axios.post('http://localhost:8080/AddCustomer', requestData)
+    axios.post('http://localhost:8080/addStaff', requestData)
       .then(response => {
         console.log('Response:', response);
         console.log('Response data:', response.data);
@@ -56,7 +54,7 @@ export const PopFormCust = ({ showModal, handleModalClose }) => {
   return (
     <Modal show={showModal} onHide={handleModalClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Add Customer</Modal.Title>
+        <Modal.Title>Add Staff</Modal.Title>
       </Modal.Header>
       <Modal.Body>
       <form onSubmit={handleSubmits}>
@@ -78,17 +76,11 @@ export const PopFormCust = ({ showModal, handleModalClose }) => {
                 <label for="female">Female</label>
                 <input type="radio" value="Female" onChange={(e) => setGender(e.target.value)} />
               </div>
-            </div>
-            <div className="row mb-3">
-              <div className="col-md-6">
-                <label className="form-label">Zanzibar ID</label>
-                <input type="text" value={zanId} onChange={(e) => setZanId(e.target.value)} className="form-control" placeholder="Enter your Nationality" />
-              </div>
               <div className="col-md-6">
                 <label className="form-label">Address</label>
                 <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="form-control" placeholder="Enter your address" />
               </div>
-            </div>
+            </div>      
             <div className="row mb-3">
               <div className="col-md-6">
                 <label className="form-label">Phone Number</label>
@@ -99,8 +91,8 @@ export const PopFormCust = ({ showModal, handleModalClose }) => {
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" placeholder="Enter your password" />
               </div>
             </div>
-          </form>
           
+          </form>
       </Modal.Body>
       <Modal.Footer>
       <div className="d-flex justify-content-between">
@@ -120,4 +112,4 @@ export const PopFormCust = ({ showModal, handleModalClose }) => {
   );
 };
 
-export default PopFormCust;
+export default PopStaffForm;

@@ -1,9 +1,24 @@
-import React from 'react'
+import {React,useState,useEffect} from 'react'
 import Navigation from '../Admin/Navigation.';
 import Header from '../Header';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 export default function UserAccount() {
+    //kuvuta data
+    const [data, setData] = useState([]);
+    useEffect(() => {
+    fetchData();
+  }, []);
+  
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/getAllUser'); 
+      setData(response.data);
+    } catch (error) {
+      console.log('Error fetching data:', error);
+    }
+  };
   return (
     <div>
       
@@ -21,23 +36,30 @@ export default function UserAccount() {
   </div>
 
   <table className='table'>
-    <tr>
+  <thead>
+  <tr>
+      <th>ID</th>
       <th>User Name</th>
       <th>Passwords</th>
       <th>Role</th>
       <th>Action</th>
     </tr>
-    <tr>
-      <td>Peter</td>
-      <td>Griffin</td>
-      <td>fghj</td>
+  </thead>
+   
+    <tbody> 
+   {data.map((item, index) => (
+                  <tr key={item.userID}>
+                    <td>{index + 1}</td>
+                    <td>{item.username}</td>
+                    <td>{item.password}</td>
+                    <td>{item.role}</td>
+                    
       <td>
-      <i class="fas fa-trash"></i>
-      <Link to="/setting"><i class="fas fa-edit"></i></Link>
-      
-      </td>
-     
-    </tr>
+      <button className='delbtn' ><i class="fa fa-trash"></i></button>
+      <button className='edtbtn' ><i class="fa fa-pencil"></i></button>
+      </td> 
+      </tr> 
+   ))}</tbody>
     
   </table>
 </div>

@@ -1,12 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import React from 'react'
-import Navigation from '../Admin/Navigation.';
+import Navigation from './Navigation.';
 import Header from '../Header';
 import { Link } from 'react-router-dom';
-import './Table.css'
+import '../Customer/Table.css'
 
-export default function CustomerPayment() {
+export default function Payment() {
   return (
     <div>
       
@@ -33,7 +33,8 @@ export default function CustomerPayment() {
       <td>dsfdgfgf</td>
       <td>
      
-      
+      <button className='delbtn' ><i class="fa fa-trash"></i></button>
+      <button className='edtbtn'><i class="fa fa-pencil"></i></button>
       </td>     
     </tr>
     

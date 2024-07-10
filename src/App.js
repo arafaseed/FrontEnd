@@ -4,54 +4,59 @@ import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 
 import Login from './component/Login';
 import Header from './component/Header';
-import AddCustomer from './component/Customer/AddCustomer';
-import CustomerApplication from './component/Customer/CustomerApplication';
-import CustomerList from './component/Customer/CustomerList';
-import AddStaff from './component/Staff/AddStaff';
+import Dashbord from './component/Admin/Dashbord';
+import AccountSetting from './component/Admin/AccountSetting';
+import CustomerDashbord from './component/Customer/CustomerDashbord';
+import StaffDashbord from './component/Staff/StaffDashbord';
+import CustApplicationList from './component/Customer/CustApplicationList';
+import License from './component/Admin/License';
+import PopFormCust from './component/Customer/PopFormCust';
+import PopStaffForm from './component/Staff/PopStaffForm';
 import StaffList from './component/Staff/StaffList';
-import ApprovedApplication from './component/Staff/ApprovedApplication';
+import CustomerAppList from './component/Admin/CustomerAppList';
+import CustomerList from './component/Customer/CustomerList';
+import UserAccount from './component/Admin/UserAccount';
 import CustomerPayment from './component/Customer/CustomerPayment';
 
 
-
-import CustomerNav from './component/Customer/CustomerNav';
-import AdminDashbord from './component/Admin/AdminDashbord';
-
-import StaffTable from './component/Staff/StaffTable';
-import Dashbord from './component/Customer/Dashbord';
-import ApplicationList from './component/Customer/ApplicationList';
-import UserAccount from './component/Admin/UserAccount';
-import AccountSetting from './component/Admin/AccountSetting';
 
 function App() {
   return (
    
    <BrowserRouter>
         <Routes>
-        {/* <Route exact path='/' element={<Dashbord/>}/> */}
+        
+        <Route path='/' element={<Login/>}/>
         
           //Admin
           
-          
-          //Staff
-          
-          //Customer
-          
-          <Route path='/' element={<Login/>}/>
-          <Route path='/dashbord' element={<Dashbord/>}/>
-          <Route path='/applicationList' element={<ApplicationList/>}/>
-          <Route path='/addCustomer' element={<AddCustomer/>}/>
-          <Route path='addStaff' element={<AddStaff/>}/>
-          <Route path='/application' element={<CustomerApplication/>}/>
-          <Route path='/customerList' element={<CustomerList/>}/> 
-          <Route path='/staffList' element={<StaffList/>}/> 
-          <Route path='/approved' element={<ApprovedApplication/>}/> 
-          <Route path='/payment' element={<CustomerPayment/>}/> 
-          <Route path='/password' element={<CustomerList/>}/> 
+          <Route path='/dashbord' element={<Dashbord/>}/> 
+          <Route path='/staffList' element={<StaffList/>}/>    
+          <Route path='/customerList' element={<CustomerList/>}/>   
+          <Route path='/cusApplication' element={<CustomerAppList/>}/> 
+          <Route path='/license' element={<License/>}/>
           <Route path='/accountSetting' element={<UserAccount/>}/>
+          
+          //Form
+                
           <Route path='/setting' element={<AccountSetting/>}/>
+          <Route path='/addStaff' element={<PopStaffForm/>}/>
+          <Route path='/addCustomer' element={<PopFormCust/>}/> 
 
+        
 
+          //Staff
+          <Route path='/staffdash' element={<StaffDashbord/>}/>          
+          
+          
+          
+
+          //Customer   
+          
+          <Route path='/CustApplicationList' element={<CustApplicationList/>}/> 
+          <Route path='/customeDashbord' element={<CustomerDashbord/>}/>
+          <Route path='/customePayment' element={<CustomerPayment/>}/>
+                
         </Routes>
    </BrowserRouter>
   );

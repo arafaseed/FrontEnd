@@ -38,7 +38,8 @@ p a{
   position: absolute;  
   width: 19%;
   height: 700px;
-  background-color:rgb(23, 120, 184);
+  /* background-color:rgb(23, 120, 184); */
+  background-color: #120404;
   float: left;
   color: white;
 }    
@@ -67,7 +68,8 @@ margin-bottom: 20px;
 .headers{
   width: 100%;
   height: 100px;
-  background-color:rgb(43, 149, 235);
+  /* background-color:rgb(43, 149, 235); */
+  background-color: rgb(7, 37, 27);
   position: relative;
   
   
@@ -192,7 +194,7 @@ input[type="radio"] {
 }
 
 input[type="submit"] {
-  background-color:  #a5a0a0;
+  background-color: rgb(202, 187, 187);
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -238,6 +240,7 @@ button[type="submit"]:hover {
 }
 .table th {
   background-color: rgb(39, 131, 217);
+  /* background-color: #120404; */
   color: #ffffff;
 }
 .table tr:nth-of-type(even) {
@@ -254,5 +257,22 @@ button[type="submit"]:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
+.arafa{
+  color: blue;
+}
 
+ul li{
+  color: white;
+  list-style-type: none;
+  text-decoration: none;
+  margin-top: 20px;
+  color: white;  
+  
+}
+
+li a{
+  text-decoration: none;
+  color: white;
+  margin-top: 20px;
+}
 

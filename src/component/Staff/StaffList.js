@@ -1,11 +1,35 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import React from 'react'
+import {useState,useEffect, React} from 'react'
 import Navigation from '../Admin/Navigation.';
 import Header from '../Header'
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import PopStaffForm from './PopStaffForm';
 
 export default function StaffList() {
+  //kuvuta data
+  const [data, setData] = useState([]);
+  useEffect(() => {
+  fetchData();
+}, []);
+
+const fetchData = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/getAllStaff'); 
+    setData(response.data);
+  } catch (error) {
+    console.log('Error fetching data:', error);
+  }
+};
+
+//Kuita form
+  const [showModal, setShowModal] = useState(false);
+  const handleAddButton =() =>{
+  setShowModal(true);
+ } 
+ const handleAddModalClose =() =>{
+  setShowModal(false);
+ }
   return (
     <div>
 
@@ -18,36 +42,42 @@ export default function StaffList() {
 
       <div className='content'>
         <div class="form-group">
-        <Link to="/addStaff"><button type="button" className="btn btn-primary">Add Staff</button></Link>
+                <button type="button" className="btn btn-primary"  onClick={handleAddButton}>Add Staff</button>
            
         </div>
 
         <table className='table'>
-    <tr>
-      <th>Name</th>
-      <th>Gender</th>
-      <th>Address</th>
-      <th>ZanzibarID</th>
-      <th>Phone</th>
-      <th>Action</th>
-    </tr>
-    <tr>
-      <td>Peter</td>
-      <td>Griffin</td>
-      <td>$100</td>
-      <td>Griffin</td>
-      <td>$100</td>
+  <thead>
+               
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Gender</th>
+                  <th>Address</th>
+                  <th>Phone</th>
+                  <th>Actions</th>
+               
+              </thead>
+   <tbody> 
+   {data.map((item, index) => (
+                  <tr key={item.S_id}>
+                    <td>{index + 1}</td>
+                    <td>{item.name}</td>
+                    <td>{item.gender}</td>
+                    <td>{item.address}</td>
+                    <td>{item.phone}</td>
       <td>
-      <i class="fas fa-trash"></i>
-      <i class="fas fa-edit"></i>
-      
-      </td>
-     
-    </tr>
+      <button className='delbtn' ><i class="fa fa-trash"></i></button>
+      <button className='edtbtn' ><i class="fa fa-pencil"></i></button>
+      </td> 
+      </tr> 
+   ))}</tbody>
+       
    
   </table>
-      </div>
-      </div>
+      
+</div>
+ <PopStaffForm showModal={showModal} handleModalClose={handleAddModalClose}/>
+</div>
 
     </div>
   )
