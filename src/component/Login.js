@@ -14,7 +14,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleAddButton = () => {
-    setShowModal(true);
+    setShowModal(true); 
   }
   const handleAddModalClose = () => {
     setShowModal(false);
@@ -23,55 +23,44 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
+
     try {
-      const response = await axios.post(
-        'http://localhost:8080/login',
-        {
-          username,
-          password,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+      const response = await axios.get(`http://localhost:8080/api/user/username/${username}`)
+      console.log(response.data.password);
+
+      if(username === response.data.username && password === response.data.password ){
+        alert("Hi BABY")
+        localStorage.setItem('role',response.data.role);
+        localStorage.setItem('username',response.data.username);
+
+        if(response.data.role === "Admin"){
+          localStorage.setItem('userId', response.data.userID);
+          navigate("/dashbord")
+          alert("Its You Admin")
         }
-      );
 
-      const data = response.data;
+        if(response.data.role === "Staff"){
+          localStorage.setItem('userId', response.data.userID);
+          navigate("/staffdash")
+          alert("Its You Staff")
+        }
 
-      // Store the role name and username in the local storage
-      localStorage.setItem('role', data.role);
-      localStorage.setItem('username', data.username);
-      localStorage.setItem('userID', data.userID)
-
-      setUserId(data.userID); // update userId state
-
-      const userID = data.userID;
-      // console.log(userID);
-
-      // Make API call to second API with userId
-      axios.get(`http://localhost:8080/customer/userId/${userID}`)
-        .then((response) => {
-          setData(response.data);
-          console.log(response.data);
-          localStorage.setItem('customerId', response.data.cust_id);
-          // console.log(response.data.Cust_id);
-        })
-
-      // Redirect to the desired page after successful login
-      // navigate('/dashbord');
-
-      if (data.role === 'Admin') {
-        navigate('/dashbord')
+        if(response.data.role === "Customer" ){
+          localStorage.setItem('userId', response.data.userID);
+          navigate("/customeDashbord")
+          alert("Its You Customer")
+        }
+      }else{
+        alert("Mhh")
       }
+      
 
-      if (data.role === 'Staff') {
-        navigate('/staffdash')
-      }
 
-      if (data.role === 'Customer') {
-        navigate('/customeDashbord')
-      }
+
+
+      
+
     } catch (error) {
       setError('Invalid username or password');
       console.error('login error', error);

@@ -5,16 +5,17 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 
-export const CustomerApplicationfrom = ({ showModal, handleModalClose }) => {
-  const [licId, setLicId] = useState('');
-  const [region, setregion] = useState('');
-  const [name, setName] = useState('');
-  const [date, setDate] = useState('');
-  const [location, setLocation] = useState('');
-  const [address, setAddress] = useState('');
-  const [bType, setBType] = useState('');
+export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
+  const [licenceId, setLicenceId] = useState(0);
+  const [businessName, setBusinessName] = useState('');
+  const [createdDate, setCreatedDate] = useState('');
+  const [buildingLocation, setBuildingLocation] = useState('');
+  const [buildingAddress, setBuildingAddress] = useState('');
+  const [businessType, setBusinessType] = useState('');
+  const [region, setRegion] = useState('');
+  const [status, setStatus] = useState("Pending");
+  const [userID, setUserID] = useState(JSON.parse(localStorage.getItem('userId')));
 
-  const userID = JSON.parse(localStorage.getItem('customerId'));
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const navigate = useNavigate();
 
@@ -23,36 +24,39 @@ export const CustomerApplicationfrom = ({ showModal, handleModalClose }) => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setLocation(`Lat: ${latitude}, Long: ${longitude}`);
+          setBuildingLocation(`Lat: ${latitude}, Long: ${longitude}`);
         },
         (error) => {
           console.error("Error fetching location: ", error);
-          setLocation('Unable to retrieve location');
+          setBuildingLocation('Unable to retrieve location');
         }
       );
     } else {
-      setLocation('Geolocation is not supported by this browser.');
+      setBuildingLocation('Geolocation is not supported by this browser.');
     }
   };
 
-  const handleSubmits = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const requestData = {
-      name: name,
-      date: date,
+      licence_id: licenceId,
+      business_name: businessName,
+      created_date: createdDate,
+      building_location: buildingLocation,
+      building_address: buildingAddress,
+      business_Type: businessType,
       region: region,
-      location: location,
-      address: address,
-      b_Type: bType,
+      status,
       customer: {
-        cust_id: userID,
+        userID: userID,
       },
     };
     console.log('Request data:', requestData);
-    axios.post('http://localhost:8080/addLicense', requestData)
+    axios.post('http://localhost:8080/api/licence/addLicense', requestData)
       .then(response => {
         console.log('Response:', response);
         console.log('Response data:', response.data);
+        alert("Successfull")
         // navigate("/")
       })
       .catch((error) => {
@@ -66,22 +70,21 @@ export const CustomerApplicationfrom = ({ showModal, handleModalClose }) => {
         <Modal.Title>Apply for License userID {userID}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form onSubmit={handleSubmits}>
-         
+        <form onSubmit={handleSubmit}>
           <div className="row mb-3">
             <div className="col-md-6">
-              <label className="form-label">Bussiness Name</label>
+              <label className="form-label">Business Name</label>
               <input type="text" 
-              value={name} 
-              onChange={(e) => setName(e.target.value)} 
+              value={businessName} 
+              onChange={(e) => setBusinessName(e.target.value)} 
               className="form-control" 
-              placeholder="Enter Name of you bussiness" />
+              placeholder="Enter Name of your business" />
             </div>
             <div className="col-md-6">
               <label className="form-label">Date</label>
               <input type="date" 
-              value={date} 
-              onChange={(e) => setDate(e.target.value)} 
+              value={createdDate} 
+              onChange={(e) => setCreatedDate(e.target.value)} 
               className="form-control" />
             </div>
           </div>
@@ -94,48 +97,48 @@ export const CustomerApplicationfrom = ({ showModal, handleModalClose }) => {
                 type="text"
                 className="form-control"
                 placeholder="Add location"
-                value={location}
+                value={buildingLocation}
                 readOnly
               />
             </div>
             <div className="col-md-6">
               <label className="form-label">Address</label>
               <input type="text" 
-              value={address} 
-              onChange={(e) => setAddress(e.target.value)} 
+              value={buildingAddress} 
+              onChange={(e) => setBuildingAddress(e.target.value)} 
               className="form-control" 
               placeholder="Enter Address" />
             </div>
           </div>
           <div className="row mb-3">
             <div className="col-md-6">
-            <label className="form-label">Bussiness Type</label>
-                <select className="form-control" 
-                value={bType} 
-                onChange={(e) => setBType(e.target.value)} 
-                 placeholder=" Select Bussiness Type" >
-                  <option value="">Select Bussiness Type</option>
-                  <option value="Enterprises">Enterprises</option>
-                  <option value="Organization">Organization</option>
-                  </select>
+              <label className="form-label">Business Type</label>
+              <select className="form-control" 
+              value={businessType} 
+              onChange={(e) => setBusinessType(e.target.value)} 
+              placeholder=" Select Business Type" >
+                <option value="">Select Business Type</option>
+                <option value="Shop">Shop</option>
+                <option value="Enterprise">Enterprise</option>
+                <option value="Organization">Organization</option>
+              </select>
             </div>
             <div className="col-md-6">
-                <label className="form-label">Select Region</label>
-                <select className="form-control" 
-                value={region} 
-                onChange={(e) => setregion(e.target.value)} 
-                 placeholder="Enter Owner's Name" >
-                  <option value="">Select Region</option>
-                  <option value="Mjini Magharibi Region">Mjini Magharibi Region</option>
-                  <option value="North Unguja Region">North Unguja Region</option>
-                  <option value="South Unguja Region">South Unguja Region</option>
-                  <option value="North Pemba Region">North Pemba Region</option>
-                  <option value="South Pemba Region">South Pemba Region</option>
-                </select>
-              </div>
-           
+            <label className="form-label">Select Region</label>
+              <select className="form-control" 
+              value={region} 
+              onChange={(e) => setRegion(e.target.value)} 
+              placeholder="Enter Region" >
+                <option value="">Select Region</option>
+                <option value="Kusini">Kusini</option>
+                <option value="Mjini Magharibi Region">Mjini Magharibi Region</option>
+                <option value="North Unguja Region">North Unguja Region</option>
+                <option value="South Unguja Region">South Unguja Region</option>
+                <option value="North Pemba Region">North Pemba Region</option>
+                <option value="South Pemba Region">South Pemba Region</option>
+              </select>
+            </div>
           </div>
-        
         </form>
       </Modal.Body>
       <Modal.Footer>
@@ -143,7 +146,7 @@ export const CustomerApplicationfrom = ({ showModal, handleModalClose }) => {
           Close
         </Button>
         <Button variant="primary" onClick={(e) => {
-          handleSubmits(e);
+          handleSubmit(e);
           handleModalClose();
         }}>
           Save
@@ -153,4 +156,4 @@ export const CustomerApplicationfrom = ({ showModal, handleModalClose }) => {
   );
 };
 
-export default CustomerApplicationfrom;
+export default CustomerApplicationForm;

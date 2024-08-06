@@ -4,7 +4,8 @@ import { Link, NavLink } from 'react-router-dom';
 import links from '../List';
 
 import React from 'react';
-const username = localStorage.getItem('username')
+
+// const username = localStorage.getItem('username')
 
 const Navigation = ({userRole = localStorage.getItem('role') }) => {
     return(
@@ -26,7 +27,7 @@ const Navigation = ({userRole = localStorage.getItem('role') }) => {
                     ))}
                     </ul>
             
-                    <h3>Login as {username}</h3>
+                    <h3>Login as {localStorage.getItem('username')}</h3>
                 
 {/*                 
                     <p><Link to="/dashbord"><i class="fa fa-dashboard"></i> Dashbord </Link></p>

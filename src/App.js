@@ -17,6 +17,9 @@ import CustomerAppList from './component/Admin/CustomerAppList';
 import CustomerList from './component/Customer/CustomerList';
 import UserAccount from './component/Admin/UserAccount';
 import CustomerPayment from './component/Customer/CustomerPayment';
+import Pay from './component/Customer/Pay';
+import Map from './component/Map';
+
 
 
 
@@ -42,7 +45,10 @@ function App() {
           <Route path='/setting' element={<AccountSetting/>}/>
           <Route path='/addStaff' element={<PopStaffForm/>}/>
           <Route path='/addCustomer' element={<PopFormCust/>}/> 
+          <Route path='/payments' element={<Pay/>}/> 
 
+          //Map
+          <Route path='/map' element={<Map/>}/>
         
 
           //Staff

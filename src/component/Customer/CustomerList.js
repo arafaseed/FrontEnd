@@ -19,6 +19,16 @@ const CustomerList = () => {
     }
   };
 
+  const handleDelete = async (itemId) => {
+    if (window.confirm('Are you sure you want to delete?')) {
+      try {
+        await axios.delete(`http://localhost:8080/deleteCustomer/11`);
+        } catch (error) {
+        console.error('Error deleting item:', error);
+      }
+    }
+  };
+ 
 
   const [showModal, setShowModal] = useState(false);
   const handleAddButton =() =>{
@@ -63,15 +73,14 @@ const CustomerList = () => {
                     <td>{item.address}</td>
                     <td>{item.zan_id}</td>
                     <td>{item.phone}</td>
-      <td>
-      <button className='delbtn' ><i class="fa fa-trash"></i></button>
-      <button className='edtbtn' ><i class="fa fa-pencil"></i></button>
-      </td> 
-      </tr> 
-   ))}</tbody>
-       
-   
-  </table>
+                    <td>
+                    <button className="button delete" onClick={() => handleDelete(item.Cust_id)}><i className="fa fa-trash"></i></button>
+                    <button className="edtbtn"><i className="fa fa-pencil"></i></button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
  
 </div>
  <PopFormCust showModal={showModal} handleModalClose={handleAddModalClose}/>

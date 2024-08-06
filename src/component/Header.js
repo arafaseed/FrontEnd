@@ -14,7 +14,7 @@ export default function Header() {
             </div>   
             <div className='calender'>
             
-                      <p><Link to="/login">Logout<i class="fa fa-sign-out"></i></Link></p>       
+                      <p><Link to="/">Logout<i class="fa fa-sign-out"></i></Link></p>       
                 </div>  
 
                 <div className='calender'>

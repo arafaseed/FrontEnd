@@ -1,31 +1,28 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import Navigation from '../Admin/Navigation.';
 import Header from '../Header';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import CustomerApplicationfrom from './CustomerApplicationfrom';
 
 const CustApplicationList = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
 
-  const customerId = JSON.parse(localStorage.getItem('customerId'));
-  // const customerId = 3;
- 
+  const userID = JSON.parse(localStorage.getItem('userId'));
+  // const userID = 3;
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/getAllLicense');
+      const response = await axios.get('http://localhost:8080/api/licence/getallLicense');
       setData(response.data);
-      // if (response.status == 200){
-      //   window.location.reload(true);
-      // }
-      setFilteredData(response.data.filter(item => item.customer && item.customer.cust_id === customerId));
+      setFilteredData(response.data.filter(item => item.customer && item.customer.userID === userID));
     } catch (error) {
       console.log('Error fetching data:', error);
     }
   };
-  useEffect(() => { 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -46,43 +43,65 @@ const CustApplicationList = () => {
       <div className="main">
         <div className='content'>
           <div class="form-group">
-            <button type="button" className="btn btn-primary" onClick={handleAddButton}>Customer Application</button>
+            <button type="button" className="btn btn-outline-primary" onClick={handleAddButton}>Make Application</button>
+            <Link to="/map"><button type="button" className="btn btn-outline-primary ms-5">View map</button></Link>
+            <p><Link to="/map"><i class="fa fa-money-bill"></i>Payment </Link></p>
           </div>
-          <table className="table">
-            <thead>
-              <th>ID</th>
-              {/* <th>Name</th> */}
-              <th>RF Number</th>
-              <th>Bussiness name</th>
-              <th>Bussiness type</th>
-              <th>Address</th>
-              <th>Location</th>
-              <th>Date</th>
-              <th>Status</th>
-            </thead>
-            <tbody>
-              {filteredData.map((item, index) => (
-                <tr key={item.lic_id}>
-                  <td>{index + 1}</td>
-                  {/* <td>{item.customer.name}</td> */}
-                  <td>345{item.lic_id}</td>
-                  <td>{item.name}</td>
-                  <td>{item.b_Type}</td>
-                  <td>{item.address}</td>
-                  <td>{item.location}</td>
-                  <td>{item.date}</td>
-                  <td>
-                    Pending
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {filteredData.length > 0 ? (
+            <table className="table">
+              <thead>
+                <th>ID</th>
+                <th>Full Name</th>
+                {/* <th>RF Number</th> */}
+                <th>Bussiness name</th>
+                <th>Bussiness type</th>
+                <th>Address</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
+              </thead>
+              <tbody>
+                {filteredData.map((item, index) => (
+                  <tr key={item.licence_id}>
+                    <td>{index + 1}</td>
+                    <td>{item.customer.name}</td>
+                    {/* <td>345{item.licence_id}</td> */}
+                    <td>{item.business_name}</td>
+                    <td>{item.business_Type}</td>
+                    <td>{item.building_address}</td>
+                    <td>{item.building_location}</td>
+                    <td>{item.created_date}</td>
+                    <td className={
+                        item.status === 'Pending' ? 'bg-warning text-white' :
+                        item.status === 'Cancel' ? 'bg-danger text-white' :
+                        item.status === 'Accepted' ? 'bg-success text-white' :
+                        ''
+                      }>
+                        {item.status}
+                      </td>
+
+                    <td>
+                      <button className='btn btn-outline-danger'>Cancel</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="card">
+              <div className="card-body">
+                <i className='fa fa-warning'> No applications found </i>
+                <h5 className="card-title">Hellow</h5>
+                <p className="card-text">You don't have any applications yet.</p>
+              </div>
+            </div>
+          )}
         </div>
         <CustomerApplicationfrom showModal={showModal} handleModalClose={handleAddModalClose} />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default CustApplicationList;

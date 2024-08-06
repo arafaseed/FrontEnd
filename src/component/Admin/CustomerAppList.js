@@ -57,8 +57,8 @@ const CustomerAppList = () => {
             <tbody>
               {data.map((item, index) => (
                 <tr key={item.lic_id}>
-                  <td>{index + 1}</td>
-                  <td>{item.customer.name}</td>
+                  <td>REQ{index + 1}</td>
+                  { <td>{item.customer.name}</td>}
                   <td>{item.name}</td>
                   <td>{item.b_Type}</td>
                   <td>{item.address}</td>
