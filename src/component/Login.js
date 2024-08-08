@@ -30,29 +30,29 @@ const Login = () => {
       console.log(response.data.password);
 
       if(username === response.data.username && password === response.data.password ){
-        alert("Hi BABY")
+        // alert("Hi BABY")
         localStorage.setItem('role',response.data.role);
         localStorage.setItem('username',response.data.username);
 
         if(response.data.role === "Admin"){
           localStorage.setItem('userId', response.data.userID);
           navigate("/dashbord")
-          alert("Its You Admin")
+          // alert("Its You Admin")
         }
 
         if(response.data.role === "Staff"){
           localStorage.setItem('userId', response.data.userID);
           navigate("/staffdash")
-          alert("Its You Staff")
+          // alert("Its You Staff")
         }
 
         if(response.data.role === "Customer" ){
           localStorage.setItem('userId', response.data.userID);
           navigate("/customeDashbord")
-          alert("Its You Customer")
+          // alert("Its You Customer")
         }
       }else{
-        alert("Mhh")
+        alert("Incorect username or password")
       }
       
 

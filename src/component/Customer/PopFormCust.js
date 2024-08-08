@@ -8,7 +8,7 @@ import { Modal, Button } from 'react-bootstrap';
 export const PopFormCust = ({ showModal, handleModalClose }) => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
-  const [zanId, setZanId] = useState('');
+  const [zan_Id, setzan_Id] = useState('');
   const [gender, setGender] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
@@ -20,7 +20,7 @@ export const PopFormCust = ({ showModal, handleModalClose }) => {
     const customerData = {
       name: name,
       username: username,
-      zanId: zanId,
+      zan_Id: zan_Id,
       gender: gender,
       phone: phone,
       address: address,
@@ -32,7 +32,7 @@ export const PopFormCust = ({ showModal, handleModalClose }) => {
         console.log('Response:', response);
         console.log('Response data:', response.data);
         // navigate("/")
-        alert("Customer Created Successfull")
+        // alert("Customer Created Successfull")
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -68,7 +68,7 @@ export const PopFormCust = ({ showModal, handleModalClose }) => {
           <div className="row mb-3">
             <div className="col-md-6">
               <label className="form-label">Zanzibar ID</label>
-              <input type="text" value={zanId} onChange={(e) => setZanId(e.target.value)} className="form-control" placeholder="Enter your Nationality" />
+              <input type="text" value={zan_Id} onChange={(e) => setzan_Id(e.target.value)} className="form-control" placeholder="Enter your Nationality" />
             </div>
             <div className="col-md-6">
               <label className="form-label">Address</label>

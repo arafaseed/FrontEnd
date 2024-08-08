@@ -27,17 +27,8 @@ const Navigation = ({userRole = localStorage.getItem('role') }) => {
                     ))}
                     </ul>
             
-                    <h3>Login as {localStorage.getItem('username')}</h3>
+                   {/* <h3>Login as {localStorage.getItem('username')}</h3> */}
                 
-{/*                 
-                    <p><Link to="/dashbord"><i class="fa fa-dashboard"></i> Dashbord </Link></p>
-                    <p><Link to="/staffList"><i class="fa fa-list"></i> Staff List </Link></p>
-                    <p><Link to="/customerList"><i class="fa fa-list"></i> Customer List </Link></p>
-                    <p><Link to="/customeAapplication"><i class="fa fa-file-alt"></i>Customer Application </Link></p>
-                    <p><Link to="/approved"><i class="fa fa-check"></i>Approved Application </Link></p>
-                    <p><Link to="/payment"><i class="fa fa-money-bill"></i>Payment </Link></p>
-                    <p><Link to="/accountSetting"><i class="fa fa-cog"></i>User Account </Link></p> */}
-
 
                 </div> 
                 

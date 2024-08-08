@@ -12,8 +12,9 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
   const [buildingLocation, setBuildingLocation] = useState('');
   const [buildingAddress, setBuildingAddress] = useState('');
   const [businessType, setBusinessType] = useState('');
-  const [region, setRegion] = useState('');
+  const [region, setRegion] = useState('');  
   const [status, setStatus] = useState("Pending");
+  const [amount, setAmount] = useState(0);
   const [userID, setUserID] = useState(JSON.parse(localStorage.getItem('userId')));
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -44,13 +45,15 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
       created_date: createdDate,
       building_location: buildingLocation,
       building_address: buildingAddress,
-      business_Type: businessType,
+      business_Type:businessType,
+      amount:amount,
       region: region,
       status,
       customer: {
         userID: userID,
       },
     };
+   
     console.log('Request data:', requestData);
     axios.post('http://localhost:8080/api/licence/addLicense', requestData)
       .then(response => {
@@ -63,6 +66,17 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
         console.error('Error:', error);
       })
   }
+
+  // function YourComponent() {
+  //   const [number_year, setNumber_year] = useState('');
+    
+  
+    const handleNumberYearChange = (e) => {
+      const selectedNumberYear = e.target.value;
+      setAmount(selectedNumberYear);
+      const calculatedAmount = selectedNumberYear * 5000;
+      setAmount(calculatedAmount);
+    };
 
   return (
     <Modal show={showModal} onHide={handleModalClose}>
@@ -81,11 +95,16 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
               placeholder="Enter Name of your business" />
             </div>
             <div className="col-md-6">
-              <label className="form-label">Date</label>
-              <input type="date" 
-              value={createdDate} 
-              onChange={(e) => setCreatedDate(e.target.value)} 
-              className="form-control" />
+              <label className="form-label">Amount</label>
+              <select className="form-control" 
+              value={amount} 
+              onChange={handleNumberYearChange}
+              placeholder="Number of year" >
+                <option value="">Number Of Year</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
             </div>
           </div>
           <div className="row mb-3">
@@ -118,7 +137,6 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
               onChange={(e) => setBusinessType(e.target.value)} 
               placeholder=" Select Business Type" >
                 <option value="">Select Business Type</option>
-                <option value="Shop">Shop</option>
                 <option value="Enterprise">Enterprise</option>
                 <option value="Organization">Organization</option>
               </select>
@@ -130,7 +148,6 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
               onChange={(e) => setRegion(e.target.value)} 
               placeholder="Enter Region" >
                 <option value="">Select Region</option>
-                <option value="Kusini">Kusini</option>
                 <option value="Mjini Magharibi Region">Mjini Magharibi Region</option>
                 <option value="North Unguja Region">North Unguja Region</option>
                 <option value="South Unguja Region">South Unguja Region</option>

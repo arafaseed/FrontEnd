@@ -13,7 +13,7 @@ export default function UserAccount() {
   
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/getAllUser'); 
+      const response = await axios.get('http://localhost:8080/api/user/getallUser'); 
       setData(response.data);
     } catch (error) {
       console.log('Error fetching data:', error);

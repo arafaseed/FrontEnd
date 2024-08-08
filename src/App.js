@@ -11,14 +11,14 @@ import StaffDashbord from './component/Staff/StaffDashbord';
 import CustApplicationList from './component/Customer/CustApplicationList';
 import License from './component/Admin/License';
 import PopFormCust from './component/Customer/PopFormCust';
-import PopStaffForm from './component/Staff/PopStaffForm';
-import StaffList from './component/Staff/StaffList';
-import CustomerAppList from './component/Admin/CustomerAppList';
-import CustomerList from './component/Customer/CustomerList';
+import CustomerList from './component/Admin/CustomerList';
 import UserAccount from './component/Admin/UserAccount';
 import CustomerPayment from './component/Customer/CustomerPayment';
 import Pay from './component/Customer/Pay';
 import Map from './component/Map';
+import ViewApplication from './component/Admin/ViewApplication';
+import StaffList from './component/Admin/StaffList';
+import PopStaffForm from './component/Admin/PopStaffForm';
 
 
 
@@ -36,7 +36,7 @@ function App() {
           <Route path='/dashbord' element={<Dashbord/>}/> 
           <Route path='/staffList' element={<StaffList/>}/>    
           <Route path='/customerList' element={<CustomerList/>}/>   
-          <Route path='/cusApplication' element={<CustomerAppList/>}/> 
+          <Route path='/view-application' element={<ViewApplication/>}/> 
           <Route path='/license' element={<License/>}/>
           <Route path='/accountSetting' element={<UserAccount/>}/>
           
@@ -45,7 +45,7 @@ function App() {
           <Route path='/setting' element={<AccountSetting/>}/>
           <Route path='/addStaff' element={<PopStaffForm/>}/>
           <Route path='/addCustomer' element={<PopFormCust/>}/> 
-          <Route path='/payments' element={<Pay/>}/> 
+          <Route path='/payments/:license_id' element={<Pay/>}/> 
 
           //Map
           <Route path='/map' element={<Map/>}/>
