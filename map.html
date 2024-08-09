@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zanzibar Building Locations</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 600px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h3>Zanzibar Building Locations (Unguja & Pemba)</h3>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Initialize the map centered on Unguja (Zanzibar) with a closer view
+    var map = L.map('map').setView([-6.13, 39.31], 10);
+
+    // Add a tile layer to the map (OpenStreetMap tiles)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+    }).addTo(map);
+
+    // Set map bounds to tightly cover Unguja and Pemba
+    var zanzibarBounds = L.latLngBounds([
+      [-6.5, 39],   // Southwest corner of Unguja
+      [-4.8, 39.9]  // Northeast corner of Pemba
+    ]);
+    map.fitBounds(zanzibarBounds);
+
+    // Fetch coordinates from the API
+    fetch('http://localhost:8080/api/licence/getallLicense')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        data.forEach(license => {
+          const [lat, lon] = license.building_location.split(',');
+          const latFloat = parseFloat(lat);
+          const lonFloat = parseFloat(lon);
+          console.log(latFloat, lonFloat);
+
+          // Determine marker color based on building_address
+          let markerColor = 'green';
+          if (license.building_address.toLowerCase().includes('mwera')) {
+            markerColor = 'red';
+          }
+
+          // Create marker with custom color
+          L.marker([latFloat, lonFloat], {
+            icon: L.divIcon({
+              className: 'custom-marker',
+              html: `<div style="background-color: ${markerColor}; width: 10px; height: 10px; border-radius: 50%;"></div>`,
+              iconSize: [10, 10]
+            })
+          })
+            .addTo(map)
+            .bindPopup(`
+              <h2>${license.business_name}</h2>
+              <p>Business Location: ${license.building_address}</p>
+            `);
+        });
+      })
+      .catch(error => console.error('Error fetching license data:', error));
+
+    // Test marker with hardcoded position
+    L.marker([-6.8042,39.279])
+      .addTo(map)
+      .bindPopup('Test Marker');
+  </script>
+</body>
+</html>
