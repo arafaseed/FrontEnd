@@ -55,8 +55,7 @@ const  ViewApplication = () => {
       <div className="main">
         <div className='content'>
           <div class="form-group">
-            <Link to="/map"><button type="button" className="btn btn-outline-primary">View map</button></Link>
-            <p><Link to="/map"><i class="fa fa-money-bill"></i>Payment </Link></p>
+              <a href="/map.html" className="btn btn-outline-primary">Open Map</a>
           </div>
           
             <table className="table">
