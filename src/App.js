@@ -15,10 +15,11 @@ import CustomerList from './component/Admin/CustomerList';
 import UserAccount from './component/Admin/UserAccount';
 import CustomerPayment from './component/Customer/CustomerPayment';
 import Pay from './component/Customer/Pay';
-import Map from './component/Map';
 import ViewApplication from './component/Admin/ViewApplication';
 import StaffList from './component/Admin/StaffList';
 import PopStaffForm from './component/Admin/PopStaffForm';
+// import MarkerClusterMap from './component/Admin/MapComponent';
+import MapComponent from './component/MapComponent';
 
 
 
@@ -48,7 +49,7 @@ function App() {
           <Route path='/payments/:license_id' element={<Pay/>}/> 
 
           //Map
-          <Route path='/map' element={<Map/>}/>
+          {/* <Route path='/map' element={<MarkerClusterMap/>}/> */}
         
 
           //Staff

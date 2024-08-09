@@ -1,47 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
-import axios from 'axios';
+// import React, { useState, useEffect } from 'react';
+// import { Map, TileLayer, Marker, Popup } from 'leaflet-react';
 
-// Fix for missing marker icons
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png'
-});
+// const MapComponent = () => {
+//   const [markers, setMarkers] = useState([
+//     { lat: 37.7749, lng: -122.4194, title: 'Marker 1' },
+//     { lat: 37.7859, lng: -122.4364, title: 'Marker 2' },
+//     { lat: 37.7963, lng: -122.4574, title: 'Marker 3' },
+//     { lat: 37.8067, lng: -122.4784, title: 'Marker 4' },
+//     { lat: 37.8171, lng: -122.4994, title: 'Marker 5' }
+//   ]);
 
-const MapComponent = () => {
-  const [markers, setMarkers] = useState([]);
+//   return (
+//     <Map center={[37.7749, -122.4194]} zoom={12}>
+//       <TileLayer
+//         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+//         attribution="&copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a>"
+//       />
+//       {markers.map((marker, index) => (
+//         <Marker key={index} position={[marker.lat, marker.lng]}>
+//           <Popup>{marker.title}</Popup>
+//         </Marker>
+//       ))}
+//     </Map>
+//   );
+// };
 
-  useEffect(() => {
-    // Fetch data from the API
-    axios.get('http://your-backend-url/api/markers')
-      .then(response => setMarkers(response.data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
-
-  const bounds = [
-    [-6.50, 39.00], // Southwest coordinates
-    [-4.80, 40.20]  // Northeast coordinates
-  ];
-
-  return (
-    <div style={{ height: '500px', width: '500px', margin: '0 auto' }}>
-      <MapContainer bounds={bounds} style={{ height: '100%', width: '100%' }}>
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        />
-        {markers.map((marker, idx) => (
-          <Marker key={idx} position={[marker.latitude, marker.longitude]}>
-            <Popup>{marker.description}</Popup>
-          </Marker>
-        ))}
-      </MapContainer>
-    </div>
-  );
-};
-
-export default MapComponent;
+// export default MapComponent;

@@ -20,22 +20,24 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const navigate = useNavigate();
 
-  const handleGetLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setBuildingLocation(`Lat: ${latitude}, Long: ${longitude}`);
-        },
-        (error) => {
-          console.error("Error fetching location: ", error);
-          setBuildingLocation('Unable to retrieve location');
-        }
-      );
-    } else {
-      setBuildingLocation('Geolocation is not supported by this browser.');
-    }
-  };
+ const handleGetLocation = () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        // Format the location as "latitude,longitude"
+        setBuildingLocation(`${latitude},${longitude}`);
+      },
+      (error) => {
+        console.error("Error fetching location: ", error);
+        setBuildingLocation('Unable to retrieve location');
+      }
+    );
+  } else {
+    setBuildingLocation('Geolocation is not supported by this browser.');
+  }
+};
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
