@@ -25,7 +25,7 @@ export default function Header() {
                
                 
                
-                <div className='tag'>
+                <div className='tittle'>
                 <h1>BUSSINESS LICENCE MANAGEMENT SYSTEM</h1>
                    
                 </div>              

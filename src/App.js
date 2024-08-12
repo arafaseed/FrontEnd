@@ -20,6 +20,8 @@ import StaffList from './component/Admin/StaffList';
 import PopStaffForm from './component/Admin/PopStaffForm';
 // import MarkerClusterMap from './component/Admin/MapComponent';
 import MapComponent from './component/MapComponent';
+import Payment from './component/Admin/Payment';
+
 
 
 
@@ -40,17 +42,18 @@ function App() {
           <Route path='/view-application' element={<ViewApplication/>}/> 
           <Route path='/license' element={<License/>}/>
           <Route path='/accountSetting' element={<UserAccount/>}/>
+          <Route path='/payment' element={<Payment/>}/> 
           
           //Form
                 
           <Route path='/setting' element={<AccountSetting/>}/>
           <Route path='/addStaff' element={<PopStaffForm/>}/>
-          <Route path='/addCustomer' element={<PopFormCust/>}/> 
-          <Route path='/payments/:license_id' element={<Pay/>}/> 
+          <Route path='/addCustomer' element={<PopFormCust/>}/>           
+          <Route path='/paymentForm/:lecenceId' element={<Pay/>}/> 
 
           //Map
           {/* <Route path='/map' element={<MarkerClusterMap/>}/> */}
-        
+          
 
           //Staff
           <Route path='/staffdash' element={<StaffDashbord/>}/>          

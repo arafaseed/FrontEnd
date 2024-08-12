@@ -37,13 +37,11 @@ export default function UserAccount() {
 
   <table className='table'>
   <thead>
-  <tr>
       <th>ID</th>
       <th>User Name</th>
       <th>Passwords</th>
       <th>Role</th>
       <th>Action</th>
-    </tr>
   </thead>
    
     <tbody> 
@@ -55,8 +53,8 @@ export default function UserAccount() {
                     <td>{item.role}</td>
                     
       <td>
-      <button className='delbtn' ><i class="fa fa-trash"></i></button>
-      <button className='edtbtn' ><i class="fa fa-pencil"></i></button>
+      <button className='btn btn-outline-danger ms-1'>Delete</button>
+      <button className='btn btn-outline-primary ms-1'>Update</button>
       </td> 
       </tr> 
    ))}</tbody>

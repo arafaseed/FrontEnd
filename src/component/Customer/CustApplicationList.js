@@ -9,7 +9,9 @@ import Navigation from '../Admin/Navigation.';
 
 const CustApplicationList = () => {
   const [data, setData] = useState([]);
+  const [status, setstatus] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const navigate = useNavigate();
 
   console.log("arafa")
@@ -39,14 +41,13 @@ const CustApplicationList = () => {
   };
 
   const handlePaymentClick = (licenseId) => {
-    navigate(`/payments/${licenseId}`);
+    navigate(`/paymentForm/${licenseId}`);
   };
 
   const handleStatus = (licence_id) =>{
 
     axios.patch(`http://localhost:8080/api/licence/customer/${licence_id}/status`)
     .then((response)=>{
-      alert("status changed")
     })
     .catch(error=>{
       console.error(error);
@@ -65,8 +66,7 @@ const CustApplicationList = () => {
         <div className='content'>
           <div className="form-group">
             <button type="button" className="btn btn-outline-primary" onClick={handleAddButton}>Make Application</button>
-            <Link to="/map"><button type="button" className="btn btn-outline-primary ms-5">View map</button></Link>
-            <p><Link to="/map"><i className="fa fa-money-bill"></i>Payment </Link></p>
+                     
           </div>
           {filteredData.length > 0 ? (
             <table className="table">

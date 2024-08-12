@@ -12,7 +12,7 @@ const Navigation = ({userRole = localStorage.getItem('role') }) => {
         <div>
        
         <div className="navigations">
-                    <div className='name'> <h5>Main Navigation</h5></div>
+                    <div className='nav'> <h5>Main Navigation</h5></div>
                     
                     
                     <ul>

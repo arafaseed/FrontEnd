@@ -59,33 +59,30 @@ const CustomerList = () => {
               Add Customer
             </button>
           </div>
-          <table className="table">
+          <table className='table'>
             <thead>
-              <tr>
-                <th>ID</th>
+                 <th>ID</th>
+                 <th>User Name</th>
                 <th>Name</th>
                 <th>Gender</th>
                 <th>Address</th>
                 <th>Zanzibar ID</th>
                 <th>Phone</th>
                 <th>Actions</th>
-              </tr>
             </thead>
             <tbody>
               {data.map((item, index) => (
                 <tr key={item.UserID}>
                   <td>{index + 1}</td>
+                  <td>{item.username}</td>
                   <td>{item.name}</td>
                   <td>{item.gender}</td>
                   <td>{item.address}</td>
                   <td>{item.zan_Id}</td>
                   <td>{item.phone}</td>
                   <td>
-                    <button
-                      className="btn btn-outline-danger"
-                      onClick={() => handleDelete(item.UserID)}>
-                      <i className="fa fa-trash"></i>
-                    </button>
+                    <button className='btn btn-outline-danger ms-1' onClick={() => handleDelete(item.UserID)}>Delete</button>
+                    <button className='btn btn-outline-primary ms-1'>Update</button>
                     </td>
                 </tr>
               ))}

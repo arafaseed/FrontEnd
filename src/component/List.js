@@ -4,7 +4,7 @@ const links = {
         {label:"Staff List",path:'/staffList', icon:'list'},
         {label:"Customer List",path:'/customerList', icon:'list'},
         {label:"Customer Application",path:'/view-application', icon:'file-alt'},
-        {label:"Approved Application",path:'/approved', icon:'list'},
+        // {label:"Approved Application",path:'/approved', icon:'list'},
         {label:"Payment",path:'/payment', icon:'money-bill'},
         {label:"User Account",path:'/accountSetting', icon:'cog'},
     ],
@@ -13,8 +13,8 @@ const links = {
         {label:'Dashboard', path:'/staffdash', icon:'dashboard'},
         {label:"Customer List",path:'/customerList', icon:'list'},
         {label:"Customer Application",path:'/view-application', icon:'file-alt'},
-        {label:"Approved Application",path:'/approvedApp', icon:'list'},
-        {label:"Payment", path:'/cusPayment', icon:'money-bill'},
+        // {label:"Approved Application",path:'/approvedApp', icon:'list'},
+        {label:"Payment", path:'/payment', icon:'money-bill'},
 
     ],
     Customer:[

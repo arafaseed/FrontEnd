@@ -1,4 +1,6 @@
-licensebody{
+.licensebody{
     text-align: center;
-    background-color: antiquewhite;
+    margin: 15px;
+    border: 5px solid rgb(32, 180, 54);
+    
 }

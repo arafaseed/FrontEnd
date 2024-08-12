@@ -3,24 +3,29 @@ import Header from '../Header';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import Navigation from '../Admin/Navigation.';
+import links from '../List';
 
 
 const Pay = () => {
   const [location, setLocation] = useState('');
   const [controlNumber, setControlNumber] = useState('');
+  const [amount, setAmount] = useState('');
+  const [status, setStatus] = useState("Paid");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [invoice, setInvoice] = useState('');
   const [paymentId, setPaymentId] = useState('');
-  const { license_id } = useParams();
+  const [endDate, setEndDate] = useState('');
+  const {lecenceId } = useParams();
   const navigate = useNavigate();
+  // const [licence_id, setLicenceId] = useState(6);
 
-  const lecence = parseInt(license_id)
+  const lecence = parseInt(lecenceId)
 
   useEffect(() => {
-    if (license_id) {
-      generateControlNumber(license_id);
+    if (lecenceId) {
+      generateControlNumber(lecenceId);
     }
-  }, [license_id]);
+  }, [lecenceId]);
 
   const generateControlNumber = (licenseId) => {
     const generatedControlNumber = `CN-${licenseId}-${Date.now()}`;
@@ -28,13 +33,13 @@ const Pay = () => {
     setIsButtonDisabled(true);
   };
 
-  const handleInvoiceChange = (e) => {
-    const enteredInvoice = e.target.value;
-    setInvoice(enteredInvoice);
-    if (enteredInvoice === controlNumber) {
-      setIsButtonDisabled(false);
-    } else {
+  const handleAmountChange = (e) => {
+    const enteredAmount = e.target.value;
+    setAmount(enteredAmount);
+    if (amount === '') {
       setIsButtonDisabled(true);
+    } else {
+      setIsButtonDisabled(false);
     }
   };
 
@@ -43,17 +48,23 @@ const Pay = () => {
     const requestData = {
       payment_id: paymentId,
       control_number: controlNumber,
-      license_id: 1,
-      status: "not paid", // Setting default status
-      paidDate: new Date().toISOString() // Setting the current date and time
-    };
+      status:status,
+      license_number: 120,
+      amount:amount,
+      endDate:endDate,
+      paidDate : new Date().toISOString().slice(0, 10), // Setting the current date and time
+      license: {
+        licence_id:lecence
+      }
+     };
     console.log('Request data:', requestData);
     axios.post('http://localhost:8080/api/payment/addPayment', requestData)
       .then(response => {
         console.log('Response:', response);
         console.log('Response data:', response.data);
+        // setIsButtonDisabled(true);
         alert("Successful");
-        // navigate("/");  // Navigate to the desired route after successful submission
+         navigate("/customePayment");  // Navigate to the desired route after successful submission
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -64,16 +75,24 @@ const Pay = () => {
     <div>
       <Header />
       <Navigation/>
+      <div className="card">
+      <h5><i className="fa fa-money-bill"></i> Customer Payment Form</h5>       
+      </div>
       <div className='main'>
-        <form onSubmit={handleSubmit}>
-          <h1>Payment Page for License {license_id}</h1>
+      <div className='content'>
+        <form onSubmit={handleSubmit}
+        disabled={controlNumber === ''}>
+        
+          <h1>Payment Page for License</h1>
           <div className="row mb-3">
             <div className="col-md-6">
               <button
                 type="button"
                 className="btn btn"
-                onClick={() => generateControlNumber(license_id)}
+                onClick={() => generateControlNumber(lecenceId)}
                 disabled={controlNumber !== ''}
+                placeholder="Enter your address"
+                required
               >
                 Generate control number
               </button>
@@ -84,20 +103,24 @@ const Pay = () => {
               )}
             </div>
             <div className="col-md-6">
-              <label className="form-label">Invoice</label>
+              <label className="form-label">Amount</label>
               <input
                 type="text"
                 className="form-control"
                 placeholder="Enter the Invoice"
-                value={invoice}
-                onChange={handleInvoiceChange}
+                value={amount}
+                onChange={handleAmountChange}
               />
             </div>
           </div>
-          <button type="button"><Link to="/customePayment">Cancel</Link></button>
-          <button type="submit" disabled={isButtonDisabled}>Submit</button>
+          <button type="button"                  
+          className="btn btn-outline-primary ms-4"><Link to="/CustApplicationList">Cancel</Link></button>
+          <button type="submit"
+          className="btn btn-outline-success ms-4"
+          disabled={isButtonDisabled}>Submit</button>
         </form>
       </div>
+    </div>
     </div>
   );
 };

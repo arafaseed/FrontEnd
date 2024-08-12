@@ -62,11 +62,11 @@ export default function StaffList() {
               <td>{index + 1}</td>
               <td>{item.name}</td>
               <td>{item.gender}</td>
-              <td>{item.phone}</td>
               <td>{item.status}</td>
+              <td>{item.phone}</td>
               <td>
-                <button className='delbtn'><i class="fa fa-trash"></i></button>
-                <button className='edtbtn'><i class="fa fa-pencil"></i></button>
+              <button className='btn btn-outline-danger ms-1'>Delete</button>
+              <button className='btn btn-outline-primary ms-1'>Update</button>
               </td>
             </tr>
           ))}

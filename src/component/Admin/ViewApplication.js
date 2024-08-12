@@ -46,6 +46,11 @@ const  ViewApplication = () => {
     
   }
 
+  //Fungua
+  const openHtmlFile = () => {
+    window.open('/your-file.html', '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div>
       <Header /><Navigation />
@@ -54,10 +59,6 @@ const  ViewApplication = () => {
       </div>
       <div className="main">
         <div className='content'>
-          <div class="form-group">
-              <a href="/map.html" className="btn btn-outline-primary">Open Map</a>
-          </div>
-          
             <table className="table">
               <thead>
                 <th>ID</th>

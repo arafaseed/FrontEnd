@@ -100,7 +100,7 @@ const Login = () => {
         {error && <p>{error}</p>}
       </form>
 
-      Don't have account:<a className='arafa' onClick={handleAddButton}>SIGN-UP</a>
+      Don't have account:<button type="button" className="btn btn-outline-primary ms-2"><a onClick={handleAddButton}>SIGN-UP</a></button>
 
       <PopFormCust showModal={showModal} handleModalClose={handleAddModalClose} />
     </div>
