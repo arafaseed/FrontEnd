@@ -14,7 +14,6 @@ const Pay = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [invoice, setInvoice] = useState('');
   const [paymentId, setPaymentId] = useState('');
-  const [endDate, setEndDate] = useState('');
   const {lecenceId } = useParams();
   const navigate = useNavigate();
   const [storedAmount, setStoredAmount] = useState(null);
@@ -65,11 +64,8 @@ const Pay = () => {
       payment_id: paymentId,
       control_number: controlNumber,
       status:status,
-      license_number: 120,
       amount:amount,
-      startDate:new Date().toISOString().slice(0, 10),
-      // Setting the current date and time
-      license: {
+            license: {
         licence_id:lecence
       }
      };

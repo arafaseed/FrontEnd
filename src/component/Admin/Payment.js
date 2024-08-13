@@ -51,8 +51,8 @@ export default function Payment() {
                 <tr key={item.payment_id}>
                   <td>{index + 1}</td>     
                   <td>{item.license.licence_id}</td> 
-                  <td>{item.startDate}</td>
-                  <td>{item.endDate}</td>
+                  <td>{item.customer.created_date}</td>
+                  <td>{item.customer.endDate}</td>
                   <td>{item.control_number}</td>
                   <td>{item.license_number}</td>                                                        
                   <td>{item.amount}</td>                  

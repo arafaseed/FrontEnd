@@ -8,7 +8,8 @@ import { Modal, Button } from 'react-bootstrap';
 export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
   const [licenceId, setLicenceId] = useState(0);
   const [businessName, setBusinessName] = useState('');
-  const [createdDate, setCreatedDate] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [buildingLocation, setBuildingLocation] = useState('');
   const [buildingAddress, setBuildingAddress] = useState('');
   const [businessType, setBusinessType] = useState('');
@@ -44,7 +45,8 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
     const requestData = {
       licence_id: licenceId,
       business_name: businessName,
-      created_date: createdDate,
+      created_date: startDate,
+      endDate:endDate,
       building_location: buildingLocation,
       building_address: buildingAddress,
       business_Type:businessType,
@@ -76,10 +78,12 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
     const handleNumberYearChange = (e) => {
       const selectedNumberYear = e.target.value;
       setAmount(selectedNumberYear);
-      const calculatedAmount = selectedNumberYear * 5000;
+      const calculatedAmount = selectedNumberYear * 50000;
       setAmount(calculatedAmount);
-    };
 
+    };
+    
+      
   return (
     <Modal show={showModal} onHide={handleModalClose}>
       <Modal.Header closeButton>
@@ -158,6 +162,7 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
               </select>
             </div>
           </div>
+        
         </form>
       </Modal.Body>
       <Modal.Footer>

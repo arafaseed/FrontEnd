@@ -70,8 +70,8 @@ import { useNavigate } from 'react-router-dom';
                 <tr key={item.payment_id}>
                   <td>{index + 1}</td>     
                   <td>{item.license.business_name}</td> 
-                  <td>{item.startDate}</td>
-                  <td>{item.endDate}</td>
+                  <td>{item.license.created_date}</td>
+                  <td>{item.license.endDate}</td>
                   <td>{item.control_number}</td>
                   <td>{item.license_number}</td>                                                        
                   <td>{item.amount}</td>                  

@@ -74,7 +74,7 @@ export default function License() {
         <p>License Fee Amount: <b>{data.license.amount}</b></p>
         <p>BUSINESS</p>
         <p>to update under</p>
-        <p>License No: BSL-SP 2456789-<b>{data.licence_id}</b></p>
+        <p>License No: BSL-SP-<b>{data.license_number}</b></p>
         <p style={{ float: 'right' }}>
           To <b>{data.endDate}</b>
         </p>
