@@ -17,6 +17,7 @@ const Pay = () => {
   const [endDate, setEndDate] = useState('');
   const {lecenceId } = useParams();
   const navigate = useNavigate();
+  const [storedAmount, setStoredAmount] = useState(null);
   // const [licence_id, setLicenceId] = useState(6);
 
   const lecence = parseInt(lecenceId)
@@ -33,13 +34,28 @@ const Pay = () => {
     setIsButtonDisabled(true);
   };
 
+  useEffect(() => {
+    const fetchStoredAmount = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/licence/byId/${lecenceId}`);
+        const data = await response.json();
+        setStoredAmount(data.amount); // Assumes response contains the correct amount for the given license ID
+      } catch (error) {
+        console.error("Error fetching the stored amount:", error);
+      }
+    };
+    fetchStoredAmount();
+  }, [lecenceId]);
+  
   const handleAmountChange = (e) => {
     const enteredAmount = e.target.value;
     setAmount(enteredAmount);
-    if (amount === '') {
-      setIsButtonDisabled(true);
+  
+    // Ensure both amounts are compared as strings or numbers
+    if (parseFloat(enteredAmount) === parseFloat(storedAmount)) {
+      setIsButtonDisabled(false); // Enable button if amounts match
     } else {
-      setIsButtonDisabled(false);
+      setIsButtonDisabled(true);  // Disable button if amounts don't match
     }
   };
 
@@ -51,8 +67,8 @@ const Pay = () => {
       status:status,
       license_number: 120,
       amount:amount,
-      endDate:endDate,
-      paidDate : new Date().toISOString().slice(0, 10), // Setting the current date and time
+      startDate:new Date().toISOString().slice(0, 10),
+      // Setting the current date and time
       license: {
         licence_id:lecence
       }
@@ -126,3 +142,8 @@ const Pay = () => {
 };
 
 export default Pay;
+
+
+
+// endDate:endDate,
+// startDate: new Date().toISOString().slice(0, 10),

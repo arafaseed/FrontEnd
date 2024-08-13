@@ -5,23 +5,27 @@ import Navigation from '../Admin/Navigation.';
 import Header from '../Header';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
  function CustomerPayment() {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const navigate = useNavigate();
 
-  const customerId = JSON.parse(localStorage.getItem('userID'));
-  // const customerId = 3;
+  
+  const userID = parseInt(localStorage.getItem('userId'));
+  
  
 
   const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:8080/api/payment/getallPayment');
-      setData(response.data);
+      // setData(response.data);
+      setFilteredData(response.data.filter(item => item.license.customer.userID === userID));
       // if (response.status == 200){
       //   window.location.reload(true);
       // }
-      setFilteredData(response.data.filter(item => item.customer && item.customer.userID === customerId));
+     
     } catch (error) {
       console.log('Error fetching data:', error);
     }
@@ -29,6 +33,14 @@ import { Link } from 'react-router-dom';
   useEffect(() => { 
     fetchData();
   }, []);
+
+
+
+  //License
+  const handleLicense = (payment_id) => {
+    navigate(`/license/${payment_id}`);
+  };
+ 
   return (
     <div>
       
@@ -54,11 +66,11 @@ import { Link } from 'react-router-dom';
               <th>License</th>
           </thead>
           <tbody>
-          {data.map((item, index) => (
+          {filteredData.map((item, index) => (
                 <tr key={item.payment_id}>
                   <td>{index + 1}</td>     
                   <td>{item.license.business_name}</td> 
-                  <td>{item.paidDate}</td>
+                  <td>{item.startDate}</td>
                   <td>{item.endDate}</td>
                   <td>{item.control_number}</td>
                   <td>{item.license_number}</td>                                                        
@@ -69,7 +81,10 @@ import { Link } from 'react-router-dom';
                     ''}>
                     {item.status}
                     </td>
-                  <td><Link to="/license"><button type="button" className="btn btn-primary">Document</button></Link></td>
+                    <button type="button" 
+                        
+                        className="btn btn-outline-primary ms-4" onClick={() => handleLicense(item.payment_id)}
+                        >License</button>
                                 
                 </tr>
               ))}

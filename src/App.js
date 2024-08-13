@@ -40,7 +40,7 @@ function App() {
           <Route path='/staffList' element={<StaffList/>}/>    
           <Route path='/customerList' element={<CustomerList/>}/>   
           <Route path='/view-application' element={<ViewApplication/>}/> 
-          <Route path='/license' element={<License/>}/>
+          <Route path='/license/:payment_id' element={<License/>}/>
           <Route path='/accountSetting' element={<UserAccount/>}/>
           <Route path='/payment' element={<Payment/>}/> 
           
