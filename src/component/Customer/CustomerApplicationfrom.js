@@ -47,6 +47,7 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
       business_name: businessName,
       created_date: startDate,
       endDate:endDate,
+      number_ofYear:selectedNumberYear,
       building_location: buildingLocation,
       building_address: buildingAddress,
       business_Type:businessType,
@@ -163,6 +164,28 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
             </div>
           </div>
         
+          <div className="row mb-3">
+            <div className="col-md-6">
+              <label className="form-label">Number of year</label>
+              <select className="form-control" 
+              value={amount} 
+              onChange={handleNumberYearChange}
+              placeholder="Number of year" >
+                <option value="">Number Of Year</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">endDate</label>
+              <input type="date" 
+              value={endDate} 
+              onChange={(e) => setEndDate(e.target.value)} 
+              className="form-control" 
+              placeholder="Enter Address" />
+            </div>
+          </div>
         </form>
       </Modal.Body>
       <Modal.Footer>
