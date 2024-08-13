@@ -76,12 +76,12 @@ export default function License() {
         <p>to update under</p>
         <p>License No: BSL-SP-<b>{data.license_number}</b></p>
         <p style={{ float: 'right' }}>
-          To <b>{data.endDate}</b>
+          To <b>{data.license.endDate}</b>
         </p>
         <p style={{ float: 'left' }}>
-          From <b>{data.startDate}</b>
+          From <b>{data.license.created_date}</b>
         </p>
-        <p>Given under my hand in Zanzibar</p>
+        <p>Given under my hand in Zanzibar</p>created_date
         <p>Date: <b>{data.startDate}</b></p>
         <p>
         

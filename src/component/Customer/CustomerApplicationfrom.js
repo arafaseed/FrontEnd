@@ -10,6 +10,7 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
   const [businessName, setBusinessName] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [selectedNumberYear,setSelectedNumberYear] = useState('');
   const [buildingLocation, setBuildingLocation] = useState('');
   const [buildingAddress, setBuildingAddress] = useState('');
   const [businessType, setBusinessType] = useState('');
@@ -75,14 +76,21 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
   // function YourComponent() {
   //   const [number_year, setNumber_year] = useState('');
     
+  const handleNumberYearChange = (e) => {
+    const selectedNumberYear = parseInt(e.target.value);
+    const calculatedAmount = selectedNumberYear * 5000; // Adjust the amount calculation to match the requirement
+    setAmount(calculatedAmount);
   
-    const handleNumberYearChange = (e) => {
-      const selectedNumberYear = e.target.value;
-      setAmount(selectedNumberYear);
-      const calculatedAmount = selectedNumberYear * 50000;
-      setAmount(calculatedAmount);
-
-    };
+    // Calculate the end date
+    const currentDate = new Date(); // Get today's date
+    const endDate = new Date(
+      currentDate.getFullYear() + selectedNumberYear,
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
+  
+    setEndDate(endDate.toISOString().split('T')[0]); // Format the date as 'YYYY-MM-DD'
+  };
     
       
   return (
@@ -164,28 +172,7 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
             </div>
           </div>
         
-          <div className="row mb-3">
-            <div className="col-md-6">
-              <label className="form-label">Number of year</label>
-              <select className="form-control" 
-              value={amount} 
-              onChange={handleNumberYearChange}
-              placeholder="Number of year" >
-                <option value="">Number Of Year</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-              </select>
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">endDate</label>
-              <input type="date" 
-              value={endDate} 
-              onChange={(e) => setEndDate(e.target.value)} 
-              className="form-control" 
-              placeholder="Enter Address" />
-            </div>
-          </div>
+          
         </form>
       </Modal.Body>
       <Modal.Footer>
