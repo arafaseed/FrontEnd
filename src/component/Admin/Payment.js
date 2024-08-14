@@ -24,6 +24,10 @@ export default function Payment() {
             item.status = 'Renew';
             axios.put(`http://localhost:8080/api/payment/updateStatus/${item.payment_id}`, item);
           }
+          if (endDate > currentDate) {
+            item.status = 'Paid';
+            axios.put(`http://localhost:8080/api/payment/updateStatus/${item.payment_id}`, item);
+          }
           return item;
         });
         setData(updatedData);

@@ -7,23 +7,40 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function CustomerPayment() {
+  const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   const userID = parseInt(localStorage.getItem('userId'));
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const response = await axios.get('http://localhost:8080/api/payment/getallPayment');
-      const filteredData = response.data.filter(item => item.license.customer.userID === userID);
-      setFilteredData(filteredData);
+      const updatedData = response.data.map((item) => {
+        const endDate = new Date(item.license.endDate);
+        const currentDate = new Date();
+        item.status = endDate < currentDate ? 'Renew' : 'Paid';
+        return item;
+      });
+      await Promise.all(updatedData.map((item) => axios.put(`http://localhost:8080/api/payment/updateStatus/${item.payment_id}`, item)));
+      setData(updatedData);
+      setFilteredData(updatedData); // Set filteredData to updatedData
     } catch (error) {
-      console.log('Error fetching data:', error);
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [userID]);
 
   const handleLicense = (payment_id) => {
     navigate(`/license/${payment_id}`);
