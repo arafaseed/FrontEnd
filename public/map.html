@@ -34,19 +34,21 @@
     map.fitBounds(zanzibarBounds);
 
     // Fetch coordinates from the API
-    fetch('http://localhost:8080/api/licence/getallLicense')
+    fetch('http://localhost:8080/api/payment/getallPayment')
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        data.forEach(license => {
-          const [lat, lon] = license.building_location.split(',');
+        data.forEach(payment => {
+          const { building_location, business_name, building_address,endDate,created_date } = payment.license;
+          const {name} = payment.license.customer;
+          const [lat, lon] = building_location.split(',');
           const latFloat = parseFloat(lat);
           const lonFloat = parseFloat(lon);
           console.log(latFloat, lonFloat);
 
           // Determine marker color based on building_address
           let markerColor = 'green';
-          if (license.building_address.toLowerCase().includes('mwera')) {
+          if (status.toLowerCase().includes('Renew')) {
             markerColor = 'red';
           }
 
@@ -60,17 +62,17 @@
           })
             .addTo(map)
             .bindPopup(`
-              <h2>${license.business_name}</h2>
-              <p>Business Location: ${license.building_address}</p>
+              <h2>${name}</h2>
+              <p>Business Name: ${business_name}</p>
+              <p>Address: ${building_address}</p>
+              <p>${created_date} ${endDate}</p>
             `);
         });
       })
       .catch(error => console.error('Error fetching license data:', error));
 
     // Test marker with hardcoded position
-    L.marker([-6.8042,39.279])
-      .addTo(map)
-      .bindPopup('Test Marker');
+   
   </script>
 </body>
 </html>
