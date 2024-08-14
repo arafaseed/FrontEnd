@@ -14,18 +14,8 @@ function CustomerPayment() {
   const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:8080/api/payment/getallPayment');
-      const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-
-      // Update status if today's date is past the endDate
-      const updatedData = response.data.map(item => {
-        if (item.license.endDate < today && item.status !== 'Renew') {
-          // Update the status to 'Renew'
-          return { ...item, status: 'Renew' };
-        }
-        return item;
-      });
-
-      setFilteredData(updatedData.filter(item => item.license.customer.userID === userID));
+      const filteredData = response.data.filter(item => item.license.customer.userID === userID);
+      setFilteredData(filteredData);
     } catch (error) {
       console.log('Error fetching data:', error);
     }
@@ -50,7 +40,7 @@ function CustomerPayment() {
         <div className='content'>
           <table className='table'>
             <thead>
-              <tr>
+              
                 <th>ID</th>
                 <th>App Name</th>
                 <th>Start Date</th>
@@ -60,7 +50,7 @@ function CustomerPayment() {
                 <th>Amount</th>
                 <th>Status</th>
                 <th>License</th>
-              </tr>
+              
             </thead>
             <tbody>
               {filteredData.map((item, index) => (

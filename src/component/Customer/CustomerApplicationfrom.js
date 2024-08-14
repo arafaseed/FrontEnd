@@ -78,6 +78,7 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
     
   const handleNumberYearChange = (e) => {
     const selectedNumberYear = parseInt(e.target.value);
+    setSelectedNumberYear(selectedNumberYear)
     const calculatedAmount = selectedNumberYear * 5000; // Adjust the amount calculation to match the requirement
     setAmount(calculatedAmount);
   

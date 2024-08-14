@@ -1,21 +1,32 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import Navigation from './Navigation.';
 import Header from '../Header';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Payment() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
         const response = await axios.get('http://localhost:8080/api/payment/getallPayment');
-        setData(response.data);
+        const updatedData = response.data.map((item) => {
+          const endDate = new Date(item.license.endDate);
+          const currentDate = new Date();
+          if (endDate < currentDate) {
+            item.status = 'Renew';
+            axios.put(`http://localhost:8080/api/payment/updateStatus/${item.payment_id}`, item);
+          }
+          return item;
+        });
+        setData(updatedData);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -24,6 +35,11 @@ export default function Payment() {
     };
     fetchData();
   }, []);
+
+  //kupata leseni kutokana na ID
+  const handleLicense = (payment_id) => {
+    navigate(`/license/${payment_id}`);
+  };
   
   return (
     <div>
@@ -38,6 +54,7 @@ export default function Payment() {
           <thead>
               <th>ID</th>
               <th>App ID</th>
+              <th>Year</th>
               <th>Start Date</th>
               <th>End Date</th>
               <th>Control Number</th>
@@ -51,8 +68,9 @@ export default function Payment() {
                 <tr key={item.payment_id}>
                   <td>{index + 1}</td>     
                   <td>{item.license.licence_id}</td> 
-                  <td>{item.customer.created_date}</td>
-                  <td>{item.customer.endDate}</td>
+                  <td>{item.license.number_ofYear}</td> 
+                  <td>{item.license.created_date}</td>
+                  <td>{item.license.endDate}</td>
                   <td>{item.control_number}</td>
                   <td>{item.license_number}</td>                                                        
                   <td>{item.amount}</td>                  
@@ -62,7 +80,13 @@ export default function Payment() {
                     ''}>
                     {item.status}
                     </td>
-                  <td><Link to="/license"><button type="button" className="btn btn-primary">Document</button></Link></td>
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary ms-4"
+                      onClick={() => handleLicense(item.payment_id)}
+                    >
+                      License
+                    </button>
                                 
                 </tr>
               ))}
@@ -73,3 +97,6 @@ export default function Payment() {
     </div>
   )
 }
+
+
+
