@@ -112,7 +112,7 @@ function CustomerPayment() {
                     </button>
                     <button
                       type="button"
-                      className="btn btn-outline-primary ms-4"
+                      className="btn btn-outline-danger ms-4"
                       onClick={() => handleRenew(item.payment_id)}
                       disabled={item.status === 'Paid'}
                     >

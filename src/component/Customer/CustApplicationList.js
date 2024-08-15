@@ -45,7 +45,6 @@ const CustApplicationList = () => {
   };
 
   const handleStatus = (licence_id) =>{
-
     axios.patch(`http://localhost:8080/api/licence/customer/${licence_id}/status`)
     .then((response)=>{
     })
