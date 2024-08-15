@@ -22,6 +22,10 @@ import PopStaffForm from './component/Admin/PopStaffForm';
 import MapComponent from './component/MapComponent';
 import Payment from './component/Admin/Payment';
 import RenewPayment from './component/Customer/RenewPayment';
+import RenewLicense from './component/Customer/RenewLicence';
+import UpdateApplication from './component/Admin/UpdateApplication';
+import UpdateCustomer from './component/Admin/UpdateCustomer';
+import UpdateStaff from './component/Admin/UpdateStaff';
 
 
 
@@ -51,8 +55,17 @@ function App() {
           <Route path='/addStaff' element={<PopStaffForm/>}/>
           <Route path='/addCustomer' element={<PopFormCust/>}/>           
           <Route path='/paymentForm/:lecenceId' element={<Pay/>}/> 
-          <Route path='/renew/:lecenceId' element={<RenewPayment/>}/> 
+    
 
+
+
+          //update Form
+          <Route path='/updateApplication/:lecenceId' element={<UpdateApplication/>}/>
+          <Route path='/updateCustomer/:userId' element={<UpdateCustomer/>}/>
+          <Route path='/updateStaff/:userId' element={<UpdateStaff/>}/>
+
+      {/* <Route path='/renew/:lecenceId' element={<RenewPayment/>}/>  */}
+          <Route path='/renew/:lecenceId' element={<RenewLicense/>}/> 
 
 
           //Map

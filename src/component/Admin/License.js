@@ -52,7 +52,7 @@ export default function License() {
       </button>
       <div className="licensebody" ref={printRef}>
         <p>
-          <img src="manispalogo.png" style={{ width: '120px', height: '120px' }} alt="logo" />
+          <img src="manispalogo.png" style={{ width: '160px', height: '140px' }} alt="logo" />
         </p>
         <p>ZANZIBAR MUNICIPAL COUNCIL</p>
         <p style={{ float: 'right'}}>

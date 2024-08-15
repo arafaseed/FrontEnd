@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
+
 export const RenewPayment = () => {
   const { licenceId: paramLicenceId } = useParams(); // Get licenceId from route params
   const licenceIdRef = useRef(paramLicenceId); // Create a ref for licenceId
@@ -25,6 +26,10 @@ export const RenewPayment = () => {
   const [paymentId, setPaymentId] = useState(0);
   const navigate = useNavigate();
 
+    const { licenceID } = useParams();
+    
+  console.log(licenceID);
+
   const lecence = parseInt(licenceId)// Use ref for licenceId
 
 
@@ -35,7 +40,7 @@ export const RenewPayment = () => {
     const selectedNumberYear = parseInt(e.target.value);
     setSelectedNumberYear(selectedNumberYear);
 
-    const calculatedAmount = selectedNumberYear * 5000; 
+    const calculatedAmount = selectedNumberYear * 50000; 
     setAmount(calculatedAmount);
 
     const currentDate = new Date(); 

@@ -18,9 +18,46 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
   const [status, setStatus] = useState("Pending");
   const [amount, setAmount] = useState(0);
   const [userID, setUserID] = useState(JSON.parse(localStorage.getItem('userId')));
+  const [errors, setErrors] = useState({});
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const navigate = useNavigate();
+
+
+
+
+  const validateForm = () => {
+    let formErrors = {};
+    let isValid = true;
+
+    if (!businessName) {
+      isValid = false;
+      formErrors['businessName'] = 'Business Name is required';
+    }
+    if (!selectedNumberYear) {
+      isValid = false;
+      formErrors['selectedNumberYear'] = 'Number of years is required';
+    }
+    if (!buildingLocation) {
+      isValid = false;
+      formErrors['buildingLocation'] = 'Location is required';
+    }
+    if (!buildingAddress) {
+      isValid = false;
+      formErrors['buildingAddress'] = 'Address is required';
+    }
+    if (!businessType) {
+      isValid = false;
+      formErrors['businessType'] = 'Business Type is required';
+    }
+    if (!region) {
+      isValid = false;
+      formErrors['region'] = 'Region is required';
+    }
+
+    setErrors(formErrors);
+    return isValid;
+  };
 
  const handleGetLocation = () => {
   if (navigator.geolocation) {
@@ -41,8 +78,13 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
 };
 
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+const handleSubmit = (event) => {
+  event.preventDefault();
+
+  if (!validateForm()) {
+    return;
+  }
+  
     const requestData = {
       licence_id: licenceId,
       business_name: businessName,
@@ -108,14 +150,14 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
               value={businessName} 
               onChange={(e) => setBusinessName(e.target.value)} 
               className="form-control" 
-              placeholder="Enter Name of your business" />
+              placeholder="Enter Name of your business" required/>
             </div>
             <div className="col-md-6">
               <label className="form-label">Amount</label>
               <select className="form-control" 
               value={amount} 
               onChange={handleNumberYearChange}
-              placeholder="Number of year" >
+              placeholder="Number of year" required>
               <option value="">Select Number Of Year</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -131,9 +173,9 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Add location"
+                placeholder="Add location" required
                 value={buildingLocation}
-                readOnly
+                readOnly 
               />
             </div>
             <div className="col-md-6">
@@ -142,7 +184,7 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
               value={buildingAddress} 
               onChange={(e) => setBuildingAddress(e.target.value)} 
               className="form-control" 
-              placeholder="Enter Address" />
+              placeholder="Enter Address"  required/>
             </div>
           </div>
           <div className="row mb-3">
@@ -151,10 +193,11 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
               <select className="form-control" 
               value={businessType} 
               onChange={(e) => setBusinessType(e.target.value)} 
-              placeholder=" Select Business Type" >
-                <option value="">Select Business Type</option>
-                <option value="Enterprise">Enterprise</option>
-                <option value="Organization">Organization</option>
+              placeholder=" Select Business Type"  required>
+                <option value="">Select Number Of Year</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
               </select>
             </div>
             <div className="col-md-6">
@@ -162,7 +205,7 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
               <select className="form-control" 
               value={region} 
               onChange={(e) => setRegion(e.target.value)} 
-              placeholder="Enter Region" >
+              placeholder="Enter Region"  required>
                 <option value="">Select Region</option>
                 <option value="Mjini Magharibi Region">Mjini Magharibi Region</option>
                 <option value="North Unguja Region">North Unguja Region</option>
