@@ -21,6 +21,7 @@ import PopStaffForm from './component/Admin/PopStaffForm';
 // import MarkerClusterMap from './component/Admin/MapComponent';
 import MapComponent from './component/MapComponent';
 import Payment from './component/Admin/Payment';
+import RenewPayment from './component/Customer/RenewPayment';
 
 
 
@@ -50,6 +51,9 @@ function App() {
           <Route path='/addStaff' element={<PopStaffForm/>}/>
           <Route path='/addCustomer' element={<PopFormCust/>}/>           
           <Route path='/paymentForm/:lecenceId' element={<Pay/>}/> 
+          <Route path='/renew/:lecenceId' element={<RenewPayment/>}/> 
+
+
 
           //Map
           {/* <Route path='/map' element={<MarkerClusterMap/>}/> */}

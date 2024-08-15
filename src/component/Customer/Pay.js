@@ -119,7 +119,7 @@ const Pay = () => {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter the Invoice"
+                placeholder="Enter the Amount"
                 value={amount}
                 onChange={handleAmountChange}
               />

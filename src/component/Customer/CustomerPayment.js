@@ -11,6 +11,7 @@ function CustomerPayment() {
   const [filteredData, setFilteredData] = useState([]);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const userID = parseInt(localStorage.getItem('userId'));
 
@@ -19,14 +20,22 @@ function CustomerPayment() {
     try {
       const response = await axios.get('http://localhost:8080/api/payment/getallPayment');
       const updatedData = response.data.map((item) => {
+        console.log(response.data);
+        
         const endDate = new Date(item.license.endDate);
         const currentDate = new Date();
         item.status = endDate < currentDate ? 'Renew' : 'Paid';
+        if (endDate > currentDate) {
+          item.status = 'Paid';
+          axios.put(`http://localhost:8080/api/payment/updateStatus/${item.payment_id}`, item);
+        }
         return item;
       });
       await Promise.all(updatedData.map((item) => axios.put(`http://localhost:8080/api/payment/updateStatus/${item.payment_id}`, item)));
       setData(updatedData);
+      
       setFilteredData(updatedData); // Set filteredData to updatedData
+      
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
@@ -46,6 +55,12 @@ function CustomerPayment() {
     navigate(`/license/${payment_id}`);
   };
 
+
+
+  const handleRenew = (payment_id) => {
+    navigate(`/renew/${payment_id}`);
+  };
+
   return (
     <div>
       <Header />
@@ -60,6 +75,7 @@ function CustomerPayment() {
               
                 <th>ID</th>
                 <th>App Name</th>
+                <th>Year</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Control Number</th>
@@ -74,6 +90,7 @@ function CustomerPayment() {
                 <tr key={item.payment_id}>
                   <td>{index + 1}</td>
                   <td>{item.license.business_name}</td>
+                  <td>{item.license.number_ofYear}</td> 
                   <td>{item.license.created_date}</td>
                   <td>{item.license.endDate}</td>
                   <td>{item.control_number}</td>
@@ -92,6 +109,14 @@ function CustomerPayment() {
                       onClick={() => handleLicense(item.payment_id)}
                     >
                       License
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary ms-4"
+                      onClick={() => handleRenew(item.payment_id)}
+                      disabled={item.status === 'Paid'}
+                    >
+                    Renew
                     </button>
                   </td>
                 </tr>

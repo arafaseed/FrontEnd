@@ -11,7 +11,7 @@ const CustApplicationList = () => {
   const [data, setData] = useState([]);
   const [status, setstatus] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  
   const navigate = useNavigate();
 
   console.log("arafa")
