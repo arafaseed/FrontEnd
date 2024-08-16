@@ -26,7 +26,7 @@ const Dashbord  = () => {
                         <div className="row">
                             <div className="col-md-3 profile">
                                 <p className="title">Total Applications</p>
-                                <p className="number"><h4>123</h4></p>
+                                <p className="number"><h4>23</h4></p>
                             </div>
                             <div className="col-md-3 profile">
                                 <p className="title">Pending Applications</p>

@@ -65,7 +65,7 @@ function App() {
           <Route path='/updateStaff/:userId' element={<UpdateStaff/>}/>
 
       {/* <Route path='/renew/:lecenceId' element={<RenewPayment/>}/>  */}
-          <Route path='/renew/:lecenceId' element={<RenewLicense/>}/> 
+          <Route path='/renew/:licence_id' element={<RenewLicense/>}/> 
 
 
           //Map

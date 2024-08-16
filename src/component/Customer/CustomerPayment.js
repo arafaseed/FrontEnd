@@ -57,8 +57,8 @@ function CustomerPayment() {
 
 
 
-  const handleRenew = (payment_id) => {
-    navigate(`/renew/${payment_id}`);
+  const handleRenew = (licence_id) => {
+    navigate(`/renew/${licence_id}`);
   };
 
   return (
@@ -113,7 +113,7 @@ function CustomerPayment() {
                     <button
                       type="button"
                       className="btn btn-outline-danger ms-4"
-                      onClick={() => handleRenew(item.payment_id)}
+                      onClick={() => handleRenew(item.license.licence_id)}
                       disabled={item.status === 'Paid'}
                     >
                     Renew

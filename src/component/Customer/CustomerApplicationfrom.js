@@ -17,6 +17,7 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
   const [region, setRegion] = useState('');  
   const [status, setStatus] = useState("Pending");
   const [amount, setAmount] = useState(0);
+  
   const [userID, setUserID] = useState(JSON.parse(localStorage.getItem('userId')));
   const [errors, setErrors] = useState({});
 
