@@ -61,11 +61,11 @@ function App() {
 
           //update Form
           <Route path='/updateApplication/:lecenceId' element={<UpdateApplication/>}/>
-          <Route path='/updateCustomer/:userId' element={<UpdateCustomer/>}/>
-          <Route path='/updateStaff/:userId' element={<UpdateStaff/>}/>
+          <Route path='/updateCustomer/:userID' element={<UpdateCustomer/>}/>
+          <Route path='/updateStaff/:userID' element={<UpdateStaff/>}/>
 
       {/* <Route path='/renew/:lecenceId' element={<RenewPayment/>}/>  */}
-          <Route path='/renew/:licence_id' element={<RenewLicense/>}/> 
+          <Route path='/renew/:lecenceId' element={<RenewLicense/>}/> 
 
 
           //Map

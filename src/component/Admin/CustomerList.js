@@ -3,11 +3,14 @@ import Header from '../Header';
 import axios from 'axios';
 import PopFormCust from '../Customer/PopFormCust';
 import Navigation from './Navigation.';
+import { NavLink, useNavigate,useParams } from 'react-router-dom';
 
 const CustomerList = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+  const { userID} = useParams();
   // Move fetchData outside of useEffect
   const fetchData = async () => {
     setLoading(true);
@@ -25,10 +28,10 @@ const CustomerList = () => {
     fetchData();
   }, []);
 
-  const handleDelete = async (userId) => {
+  const handleDelete = async (userID) => {
     if (window.confirm('Are you sure you want to delete?')) {
       try {
-        await axios.delete(`http://localhost:8080/api/customer/delete/${userId}`);
+        await axios.delete(`http://localhost:8080/api/customer/delete/${userID}`);
         fetchData(); // Refresh the data after deletion
       } catch (error) {
         console.error('Error deleting item:', error);
@@ -42,6 +45,10 @@ const CustomerList = () => {
   };
   const handleAddModalClose = () => {
     setShowModal(false);
+  };
+
+  const UpdateCustomer = (licence_id) => {
+    navigate(`/updateCustomer/${userID}`);
   };
 
   return (
@@ -87,7 +94,12 @@ const CustomerList = () => {
                       onClick={() => handleDelete(item.userID)}>
                       Delete
                     </button>
-                    <button className='btn btn-outline-primary ms-1'>Update</button>
+                    <NavLink to={`/updateCustomer/${item.userID}`}
+                      type="button"
+                      className="btn btn-outline-danger ms-4"                                    
+                       >
+                    Update
+                    </NavLink>
                     </td>
                 </tr>
               ))}

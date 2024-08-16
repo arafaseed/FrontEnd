@@ -9,9 +9,10 @@ import { useNavigate } from 'react-router-dom';
 function CustomerPayment() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const navigate = useNavigate();
 
   const userID = parseInt(localStorage.getItem('userId'));
 
