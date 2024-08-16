@@ -24,11 +24,12 @@ const  ViewApplication = () => {
     }
   };
 
-  const handleDelete = async (itemId) => {
+  const handleDelete = async (licence_id) => {
     if (window.confirm('Are you sure you want to delete?')) {
       try {
-        await axios.delete(`http://localhost:8080/deleteLicense/${itemId}`);
-        } catch (error) {
+        await axios.delete(`http://localhost:8080/api/licence/delete/${licence_id}`);
+        fetchData(); // Refresh the data after deletion
+      } catch (error) {
         console.error('Error deleting item:', error);
       }
     }
@@ -46,10 +47,7 @@ const  ViewApplication = () => {
     
   }
 
-  //Fungua
-  const openHtmlFile = () => {
-    window.open('/your-file.html', '_blank', 'noopener,noreferrer');
-  };
+ 
 
   return (
     <div>
@@ -100,9 +98,12 @@ const  ViewApplication = () => {
                         className={item.status === 'Accepted' ? 'btn btn-danger' : 'btn btn-outline-primary: btn btn-danger'}>
 
                          {item.status === 'Pending' ? 'Accepte' : 'Cancel'}
-
-                        </button>
-                      <button className='btn btn-outline-danger ms-1'>Delete</button>
+                         </button>
+                         <button 
+                      className='btn btn-outline-danger ms-1'
+                      onClick={() => handleDelete(item.licence_id)}>
+                      Delete
+                    </button>
                       <button className='btn btn-outline-primary ms-1'>Update</button>
                     </td>
                   </tr>

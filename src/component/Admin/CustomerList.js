@@ -1,34 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import Navigation from './Navigation.';
 import Header from '../Header';
 import axios from 'axios';
 import PopFormCust from '../Customer/PopFormCust';
+import Navigation from './Navigation.';
 
 const CustomerList = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // Move fetchData outside of useEffect
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('http://localhost:8080/api/customer/getallCustomer');
+      setData(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get('http://localhost:8080/api/customer/getallCustomer');
-        setData(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchData();
   }, []);
 
-  const handleDelete = async (UserID) => {
+  const handleDelete = async (userId) => {
     if (window.confirm('Are you sure you want to delete?')) {
       try {
-        await axios.delete(`http://localhost:8080/api/customer/delete/${UserID}`);
-        const newData = data.filter((item) => item.UserID !== UserID);
-        setData(newData);
+        await axios.delete(`http://localhost:8080/api/customer/delete/${userId}`);
+        fetchData(); // Refresh the data after deletion
       } catch (error) {
         console.error('Error deleting item:', error);
       }
@@ -46,7 +47,7 @@ const CustomerList = () => {
   return (
     <div>
       <Header />
-      <Navigation />
+      <Navigation/>
       <div className="card">
         <h5>
           <i className="fa fa-list"></i> Customer List
@@ -81,7 +82,11 @@ const CustomerList = () => {
                   <td>{item.zan_Id}</td>
                   <td>{item.phone}</td>
                   <td>
-                    <button className='btn btn-outline-danger ms-1' onClick={() => handleDelete(item.UserID)}>Delete</button>
+                  <button 
+                      className='btn btn-outline-danger ms-1'
+                      onClick={() => handleDelete(item.userID)}>
+                      Delete
+                    </button>
                     <button className='btn btn-outline-primary ms-1'>Update</button>
                     </td>
                 </tr>

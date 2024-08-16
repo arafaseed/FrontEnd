@@ -33,6 +33,17 @@ export default function StaffList() {
     fetchData(); // fetch data again after adding new staff
   }
 
+  const handleDelete = async (userId) => {
+    if (window.confirm('Are you sure you want to delete?')) {
+      try {
+        await axios.delete(`http://localhost:8080/api/staff/delete/${userId}`);
+        fetchData(); // Refresh the data after deletion
+      } catch (error) {
+        console.error('Error deleting item:', error);
+      }
+    }
+  };
+
   return (
     <div>
          <Header /><Navigation />
@@ -58,14 +69,18 @@ export default function StaffList() {
         </thead>
         <tbody>
           {data.map((item, index) => (
-            <tr key={item.S_id}>
+            <tr key={item.userID}>
               <td>{index + 1}</td>
               <td>{item.name}</td>
               <td>{item.gender}</td>
               <td>{item.status}</td>
               <td>{item.phone}</td>
               <td>
-              <button className='btn btn-outline-danger ms-1'>Delete</button>
+              <button 
+                      className='btn btn-outline-danger ms-1'
+                      onClick={() => handleDelete(item.userID)}>
+                      Delete
+                    </button>
               <button className='btn btn-outline-primary ms-1'>Update</button>
               </td>
             </tr>

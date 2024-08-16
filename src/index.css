@@ -122,13 +122,31 @@ img{
   background-color: rgb(39, 131, 217);
   text-align: center;
 }
-.profile{
-  background-color: azure;
-  margin: 10px;
-  height: 120px;
-  width:  260px;
-  box-shadow: 1px 3px 3px rgb(39, 131, 217);
+.profile {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s ease;
 }
+
+.profile:hover {
+  background-color: #f1f1f1;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.number h4 {
+  font-size: 2rem;
+  color: #007bff;
+}
+
 
 
 /* Content */
