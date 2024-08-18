@@ -2,11 +2,10 @@ import { useState, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { Modal, Button } from 'react-bootstrap';
 import Header from '../Header';
 import Navigation from './Navigation.';
 
-export const UpdateCustomer = ({ showModal, handleModalClose }) => {
+export const UpdateCustomer = () => {
   const [userId, setuserId] = useState(0);
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
@@ -14,7 +13,7 @@ export const UpdateCustomer = ({ showModal, handleModalClose }) => {
   const [gender, setGender] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
-  const [password, setPassword] = useState('');
+  
   const navigate = useNavigate();
 
   const { userID} = useParams();
@@ -32,13 +31,13 @@ export const UpdateCustomer = ({ showModal, handleModalClose }) => {
           setGender(data.gender);
           setPhone(data.phone);
           setAddress(data.address);
-          setPassword(data.password);
+          
         })
         .catch(error => {
           console.error('Error fetching data:', error);
         });
     }
-  }, [userID]);
+  }, [userId]);
 
   const handleSubmits = (event) => {
     event.preventDefault();
@@ -49,12 +48,12 @@ export const UpdateCustomer = ({ showModal, handleModalClose }) => {
       gender: gender,
       phone: phone,
       address: address,
-      password: password,
       };
-      axios.patch(`http://localhost:8080/api/customer/update/${userID}`, customerData)
+      axios.put(`http://localhost:8080/api/customer/update/${userID}`, customerData)
       .then(response => {
         console.log('Response:', response);
         alert("Customer updated successfully");
+        navigate('/customerList')
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -108,18 +107,13 @@ export const UpdateCustomer = ({ showModal, handleModalClose }) => {
               <label className="form-label">Phone Number</label>
               <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" placeholder="Enter your phone number" />
             </div>
-            <div className="col-md-6">
-              <label className="form-label">Password</label>
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" placeholder="Enter your password" />
-            </div>
+            
           </div>
           <div className="d-flex justify-content-between">
-          <Button variant="secondary">
-            Close
-          </Button>
-          <Button variant="primary" onClick={(e) => {handleSubmits(e)}}>
-            Save
-          </Button>
+          <button  type='submit' onClick={(e) => {handleSubmits(e)}}>
+          Save</button>
+         <button type='button'>cancel</button>
+          
         </div>
         </form>
         </div>

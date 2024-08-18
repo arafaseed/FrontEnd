@@ -1,61 +1,99 @@
-import React from 'react'
-import Navigation from '../Admin/Navigation.';
+import { useState, useEffect} from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Header from '../Header';
-import { Link } from 'react-router-dom';
+import Navigation from './Navigation.';
 
+export const AccountSetting= () => {
+  const [userId, setuserId] = useState(0);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-export default function AccountSetting() {
+  const { userID} = useParams();
+
+  useEffect(() => {
+    if (userID) {
+      setuserId(parseInt(userID));
+      
+      axios.get(`http://localhost:8080/api/user/byIdUser/${userID}`)
+        .then(response => {
+          const data = response.data;
+          setUsername(data.username);
+          setPassword(data.password);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }
+  }, [userId]);
+
+  const handleSubmits = (event) => {
+    event.preventDefault();
+    const customerData = {
+       username: username,
+       password: password,
+      };
+      axios.put(`http://localhost:8080/api/customer/update/${userID}`, customerData)
+      .then(response => {
+        console.log('Response:', response);
+        alert("Customer updated successfully");
+        navigate('/customerList')
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
+    
   return (
     <div>
       
       <Header/><Navigation/>
       <div className="card">
-            <h5><i className="fa fa-plus"></i> Add Staff</h5>       
+            <h5><i className="fa fa-plus"></i>Update Account</h5>       
                 </div>
                 <div className="main">
               
         
               <div className='content'>
-              <h1>Staff registration  Form</h1>
+              <h1>Form For Account Setting</h1>
               <form>
+              
                         <div className="row mb-3">
-                          <div className="col-md-6">
-                            <label className="form-label">Full Name</label>
-                            <input type="text" className="form-control" placeholder="Enter your name" />
-                          </div>
-                          <div className="col-md-6">
-                            <label className="form-label">Username</label>
+                        <div className="col-md-6">
+            <label className="form-label">Username</label>
+            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="form-control" placeholder="Enter your username" />
+        </div>
+        <div className="col-md-6">
+            <label className="form-label">Password</label>
+            <input type="text" value={password} onChange={(e) => setUsername(e.target.value)} className="form-control" placeholder="Enter your username" />
+        </div>
+                          
+                        </div>
+                        <div className="row mb-3">
+                        <div className="col-md-6">
+                            <label className="form-label">New Username</label>
                             <input type="text" className="form-control" placeholder="Enter your username" />
                           </div>
-                        </div>
-                        <div className="row mb-3">
                           <div className="col-md-6">
-                            <label className="form-label">Nationality</label>
-                            <input type="text" className="form-control" placeholder="Enter your Nationality" />
-                          </div>
-                          <div className="col-md-6">
-                            <label className="form-label">Current Address</label>
-                            <input type="text" className="form-control" placeholder="Enter your address" />
-                          </div>
-                        </div>
-                        <div className="row mb-3">
-                          <div className="col-md-6">
-                            <label className="form-label">Phone Number</label>
-                            <input type="text" className="form-control" placeholder="Enter your phone number" />
-                          </div>
-                          <div className="col-md-6">
-                            <label className="form-label">Password</label>
+                            <label className="form-label">New Password</label>
                             <input type="password" className="form-control" placeholder="Enter your password" />
                           </div>
                         </div>
+                        
       
-                        <div className="d-flex justify-content-between">
-                          <Link to="/accountSetting"><button type="submit" className="btn btn-primary">Save Record</button></Link>
-                          <Link to="/accountSetting"><button type="button" className="btn btn-danger">Back</button></Link>
-                        </div>
+                        
                         </form>
+                        <div className="d-flex justify-content-between">
+          <button  type='submit' onClick={(e) => {handleSubmits(e)}}>
+          Save</button>
+         <button type='button'>cancel</button>
+          
+        </div>
                         </div>
               </div>
     </div>
   )
 }
+export default AccountSetting;

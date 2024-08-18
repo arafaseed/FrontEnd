@@ -26,6 +26,7 @@ import RenewLicense from './component/Customer/RenewLicence';
 import UpdateApplication from './component/Admin/UpdateApplication';
 import UpdateCustomer from './component/Admin/UpdateCustomer';
 import UpdateStaff from './component/Admin/UpdateStaff';
+import FogetPassword from './component/Admin/FogetPassword';
 
 
 
@@ -51,7 +52,7 @@ function App() {
           
           //Form
                 
-          <Route path='/setting' element={<AccountSetting/>}/>
+          <Route path='/setting/:userID' element={<AccountSetting/>}/>
           <Route path='/addStaff' element={<PopStaffForm/>}/>
           <Route path='/addCustomer' element={<PopFormCust/>}/>           
           <Route path='/paymentForm/:lecenceId' element={<Pay/>}/> 
@@ -63,9 +64,10 @@ function App() {
           <Route path='/updateApplication/:lecenceId' element={<UpdateApplication/>}/>
           <Route path='/updateCustomer/:userID' element={<UpdateCustomer/>}/>
           <Route path='/updateStaff/:userID' element={<UpdateStaff/>}/>
+          <Route path='/fogetPassword' element={<FogetPassword/>}/>
 
       {/* <Route path='/renew/:lecenceId' element={<RenewPayment/>}/>  */}
-          <Route path='/renew/:lecenceId' element={<RenewLicense/>}/> 
+          <Route path='/renew/:lecenceIds' element={<RenewLicense/>}/> 
 
 
           //Map

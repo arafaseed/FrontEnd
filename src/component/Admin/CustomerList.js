@@ -96,7 +96,7 @@ const CustomerList = () => {
                     </button>
                     <NavLink to={`/updateCustomer/${item.userID}`}
                       type="button"
-                      className="btn btn-outline-danger ms-4"                                    
+                      className="btn btn-outline-primary ms-4"                                    
                        >
                     Update
                     </NavLink>

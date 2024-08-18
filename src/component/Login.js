@@ -9,8 +9,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [data, setData] = useState('');
-  const [userId, setUserId] = useState(0); // added userId state
   const navigate = useNavigate();
 
   const handleAddButton = () => {
@@ -23,49 +21,40 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-
     try {
-      const response = await axios.get(`http://localhost:8080/api/user/username/${username}`)
-      console.log(response.data.password);
+      const response = await axios.get(`http://localhost:8080/api/user/username/${username}`, {
+        params: {
+          password: password 
+        }
+      })
+      
+        const user = response.data;
 
-      if(username === response.data.username && password === response.data.password ){
-        // alert("Hi BABY")
-        localStorage.setItem('role',response.data.role);
-        localStorage.setItem('username',response.data.username);
+        localStorage.setItem('role', user.role);
+        localStorage.setItem('username', user.username);
+        localStorage.setItem('userId', user.userID);
 
-        if(response.data.role === "Admin"){
-          localStorage.setItem('userId', response.data.userID);
+        if(user.role === "Admin"){
           navigate("/dashbord")
-          // alert("Its You Admin")
         }
 
-        if(response.data.role === "Staff"){
-          localStorage.setItem('userId', response.data.userID);
+        if(user.role === "Staff"){
           navigate("/staffdash")
-          // alert("Its You Staff")
         }
 
-        if(response.data.role === "Customer" ){
-          localStorage.setItem('userId', response.data.userID);
+        if(user.role === "Customer" ){
           navigate("/customeDashbord")
-          // alert("Its You Customer")
         }
-      }else{
-        alert("Incorect username or password")
-      }
-      
-
-
-
-
-      
-
-    } catch (error) {
+      }catch (error) {
       setError('Invalid username or password');
       console.error('login error', error);
     }
 
+  };
+
+    
+  const handlePassword = (licence_id) => {
+    navigate(`/fogetPassword`);
   };
 
   return (
@@ -100,7 +89,8 @@ const Login = () => {
         {error && <p>{error}</p>}
       </form>
 
-      Don't have account:<button type="button" className="btn btn-outline-primary ms-2"><a onClick={handleAddButton}>SIGN-UP</a></button>
+      Don't have account:<button type="button" className="btn btn-outline-primary ms-2"><a onClick={handleAddButton}>SIGN-UP</a></button><br/>
+      Foget Password:<button type="button" className="btn btn-outline-primary ms-2"><a onClick={handlePassword}>Reset</a></button>
 
       <PopFormCust showModal={showModal} handleModalClose={handleAddModalClose} />
     </div>

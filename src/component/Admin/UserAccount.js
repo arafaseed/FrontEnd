@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navigation from '../Admin/Navigation.';
 import Header from '../Header';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { NavLink, useNavigate,useParams } from 'react-router-dom';
 
 export default function UserAccount() {
   const [data, setData] = useState([]);
@@ -60,14 +60,18 @@ export default function UserAccount() {
                   <td>{item.password}</td>
                   <td>{item.role}</td>
                   <td>
-                    <button
+                  <button 
                       className='btn btn-outline-danger ms-1'
-                      onClick={() => handleDelete(item.userID)}
-                    >
+                      onClick={() => handleDelete(item.userID)}>
                       Delete
                     </button>
-                    <button className='btn btn-outline-primary ms-1'>Update</button>
-                  </td>
+                    <NavLink to={`/setting/${item.userID}`}
+                      type="button"
+                      className="btn btn-outline-primary ms-4"                                    
+                       >
+                    Update
+                    </NavLink>
+                    </td>
                 </tr>
               ))}
             </tbody>

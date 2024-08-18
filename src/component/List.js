@@ -21,6 +21,7 @@ const links = {
         {label:"Dashbord",path:'/customeDashbord', icon:'dashboard'},
         {label:"Application",path:'/CustApplicationList', icon:'list'},
         {label:"Payment",path:'/customePayment', icon:'money-bill'},
+        {label:"Proiflle",path:'/customeProfile', icon:'money-profile'},
     ]
 }
 export default links;

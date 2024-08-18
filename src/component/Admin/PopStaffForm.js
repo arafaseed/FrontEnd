@@ -28,6 +28,7 @@ export const PopStaffForm = ({ showModal, handleModalClose }) => {
         gender: gender,
         phone: phone,
         status: status,
+        password:password,
         role: "Staff"     
        };
    

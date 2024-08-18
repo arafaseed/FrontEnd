@@ -6,8 +6,11 @@ import Navigation from '../Admin/Navigation.';
 import Header from '../Header'
 import axios from 'axios';
 import PopStaffForm from './PopStaffForm';
+import { NavLink, useNavigate,useParams } from 'react-router-dom';
 
 export default function StaffList() {
+  const navigate = useNavigate();
+  const { userID} = useParams();
   //kuvuta data
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -42,6 +45,10 @@ export default function StaffList() {
         console.error('Error deleting item:', error);
       }
     }
+  };
+
+  const updateStaff = (licence_id) => {
+    navigate(`/updateStaff/${userID}`);
   };
 
   return (
@@ -81,7 +88,12 @@ export default function StaffList() {
                       onClick={() => handleDelete(item.userID)}>
                       Delete
                     </button>
-              <button className='btn btn-outline-primary ms-1'>Update</button>
+                    <NavLink to={`/updateStaff/${item.userID}`}
+                      type="button"
+                      className="btn btn-outline-primary ms-4"                                    
+                       >
+                    Update
+                    </NavLink>
               </td>
             </tr>
           ))}
