@@ -89,7 +89,7 @@ const Login = () => {
         {error && <p>{error}</p>}
       </form>
 
-      Don't have account:<button type="button" className="btn btn-outline-primary ms-2"><a onClick={handleAddButton}>SIGN-UP</a></button><br/>
+      Don't have account:<button type="button" className="btn btn-outline-primary ms-2"><a onClick={handleAddButton}>SIGN-UP</a></button><br/><br/>
       Foget Password:<button type="button" className="btn btn-outline-primary ms-2"><a onClick={handlePassword}>Reset</a></button>
 
       <PopFormCust showModal={showModal} handleModalClose={handleAddModalClose} />

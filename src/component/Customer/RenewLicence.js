@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
+import Header from '../Header';
+import Navigation from '../Admin/Navigation.';
+
 
 const UpdateLicense = () => {
   const [licenceId, setLicenceId] = useState('');
@@ -9,9 +12,11 @@ const UpdateLicense = () => {
   const [endDate, setEndDate] = useState('');
   const [paymentAmount, setPaymentAmount] = useState('');
   const [controlNumber, setControlNumber] = useState('');
+  const [license_number, setLicense_number] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const { lecenceIds } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLicenceId(lecenceIds);
@@ -36,7 +41,7 @@ const UpdateLicense = () => {
       amount: amount,
       status: 'Paid',
       control_number: controlNumber,
-      license_number: licenceId,
+      license_number: license_number,
       license: {
         licence_id: parseInt(licenceId)
       }
@@ -49,6 +54,7 @@ const UpdateLicense = () => {
           .then(response => {
             console.log('Payment response:', response);
             alert("License updated and payment created successfully");
+            navigate("/customePayment");
           })
           .catch(error => {
             console.error('Error:', error);
@@ -86,20 +92,24 @@ const UpdateLicense = () => {
 
   return (
     <div>
-      <h2>Update License {lecenceIds}</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Licence ID:</label>
-        <input type="text" hidden value={licenceId} disabled />
-        <br />
 
+      <Header/>
+      <Navigation/>
+      <div className="card">
+        <h5>
+          <i className="fa fa-renew"></i>RENEW LICENCE 
+        </h5>
+      </div>
+      <div className="main">
+        <div className="content">
+      
+      <form onSubmit={handleSubmit}>   
         <label>Number of Years:</label>
         <select value={numberOfYears} onChange={handleNumberOfYearsChange}>
           <option value="">Select</option>
           <option value="1">1 Year</option>
           <option value="2">2 Years</option>
           <option value="3">3 Years</option>
-          <option value="4">4 Years</option>
-          <option value="5">5 Years</option>
         </select>
         <br />
 
@@ -123,6 +133,8 @@ const UpdateLicense = () => {
 
         <button type="submit" disabled={isButtonDisabled || !controlNumber}>Update License</button>
       </form>
+    </div>
+    </div>
     </div>
   );
 };

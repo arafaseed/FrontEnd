@@ -4,6 +4,8 @@ import './License.css';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useParams } from 'react-router-dom';
+import logo from '../../Asset/manispalogo.png';
+import sign from '../../Asset/sign.png';
 
 export default function License() {
   const [data, setData] = useState({});
@@ -52,7 +54,7 @@ export default function License() {
       </button>
       <div className="licensebody" ref={printRef}>
         <p>
-          <img src="manispalogo.png" style={{ width: '160px', height: '140px' }} alt="logo" />
+          <img src={logo} style={{ width: '160px', height: '140px' }} alt="logo" />
         </p>
         <p>ZANZIBAR MUNICIPAL COUNCIL</p>
         <p style={{ float: 'right'}}>
@@ -85,7 +87,7 @@ export default function License() {
         <p>Date: <b>{data.startDate}</b></p>
         <p>
         
-          <img src="sign.png" style={{ width: '70px', height: '20px', alignContent: 'center' }} alt="signature" />
+          <img src={sign} style={{ width: '70px', height: '20px', alignContent: 'center' }} alt="signature" />
         </p>
         <p>
           Director

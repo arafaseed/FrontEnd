@@ -22,7 +22,7 @@ export const UpdateCustomer = () => {
     if (userID) {
       setuserId(parseInt(userID));
       
-      axios.get(`http://localhost:8080/api/customer/byId${userID}`)
+      axios.get(`http://localhost:8080/api/customer/byId/${userID}`)
         .then(response => {
           const data = response.data;
           setName(data.name);
@@ -39,6 +39,7 @@ export const UpdateCustomer = () => {
     }
   }, [userId]);
 
+  
   const handleSubmits = (event) => {
     event.preventDefault();
     const customerData = {
@@ -60,7 +61,7 @@ export const UpdateCustomer = () => {
       });
   };
     
-
+  console.log('customerData');
   return (
  <div>
         <Header/>
@@ -74,10 +75,10 @@ export const UpdateCustomer = () => {
         <div className="content">
         <form onSubmit={handleSubmits}>
           <div className="row mb-3">
-            <div className="col-md-6">
-              <label className="form-label">Full Name</label>
-              <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" placeholder="Enter your name" />
-            </div>
+          <div className="col-md-6">
+            <label className="form-label">Full Name</label>
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" placeholder="Enter your Full Name" />
+        </div>
             <div className="col-md-6">
               <label className="form-label">Username</label>
               <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="form-control" placeholder="Enter your username" />
@@ -90,6 +91,7 @@ export const UpdateCustomer = () => {
               <input type="radio" value="Male" onChange={(e) => setGender(e.target.value)} />
               <label for="female">Female</label>
               <input type="radio" value="Female" onChange={(e) => setGender(e.target.value)} />
+            
             </div>
           </div>
           <div className="row mb-3">
@@ -110,9 +112,11 @@ export const UpdateCustomer = () => {
             
           </div>
           <div className="d-flex justify-content-between">
-          <button  type='submit' onClick={(e) => {handleSubmits(e)}}>
+          <button  type="button"
+                      className="btn btn-outline-success ms-4"  onClick={(e) => {handleSubmits(e)}}>
           Save</button>
-         <button type='button'>cancel</button>
+         <button type="button"
+                      className="btn btn-outline-danger ms-4" >cancel</button>
           
         </div>
         </form>

@@ -2,7 +2,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-import { useState, useEffect} from 'react';
+import { useState, useEffect,Link} from 'react';
 import axios from 'axios';
 import { useParams,useNavigate } from 'react-router-dom';
 import Header from '../Header';
@@ -115,10 +115,10 @@ const UpdateStaff = () => {
               
     </div>
     <div className="d-flex justify-content-between">
-          <button  type='submit' onClick={(e) => {handleSubmits(e)}}>
+          <button   type="button"
+                      className="btn btn-outline-primary ms-4"  onClick={(e) => {handleSubmits(e)}}>
           Save</button>
-         <button type='button'>cancel</button>
-          
+            
         </div>
 </form>
 </div>

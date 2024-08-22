@@ -110,7 +110,8 @@ const CustApplicationList = () => {
                         <button type="button" 
                         
                         className="btn btn-outline-primary ms-4" onClick={() => handlePaymentClick(item.licence_id)}
-                        disabled={item.status === 'Cancel'}
+                        disabled={item.status === 'Cancel' || item.status === 'Pending'}
+                        
                         >Payment</button>
                     </td>
                   </tr>

@@ -44,14 +44,12 @@ export default function UserAccount() {
           </div>
           <table className='table'>
             <thead>
-              <tr>
                 <th>ID</th>
                 <th>User Name</th>
                 <th>Password</th>
                 <th>Role</th>
                 <th>Action</th>
-              </tr>
-            </thead>
+              </thead>
             <tbody>
               {data.map((item, index) => (
                 <tr key={item.userID}>

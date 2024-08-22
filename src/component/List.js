@@ -6,7 +6,7 @@ const links = {
         {label:"Customer Application",path:'/view-application', icon:'file-alt'},
         // {label:"Approved Application",path:'/approved', icon:'list'},
         {label:"Payment",path:'/payment', icon:'money-bill'},
-        {label:"User Account",path:'/accountSetting', icon:'cog'},
+        {label:"User Account",path:'/userAccount', icon:'cog'},
     ],
     Staff:[
 

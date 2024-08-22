@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <div className="headers">
            <div className='myImage'>
-             <img  src='pi3.jpg' style={{ width: '80px', height: '80px', }}></img>
+             {/* <img  src='pi3.jpg' style={{ width: '80px', height: '80px', }}></img> */}
                 
             </div>   
             <div className='calender'>
