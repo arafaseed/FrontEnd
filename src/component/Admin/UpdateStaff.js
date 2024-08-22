@@ -62,6 +62,11 @@ const UpdateStaff = () => {
         console.error('Error:', error);
       })
   }
+
+
+  const handleCancel = () => {
+    navigate('/staffLists');
+  }
   return (
     <div>
       <Header />
@@ -118,6 +123,12 @@ const UpdateStaff = () => {
           <button   type="button"
                       className="btn btn-outline-primary ms-4"  onClick={(e) => {handleSubmits(e)}}>
           Save</button>
+
+          <button type="button"
+                className="btn btn-outline-secondary ms-4"
+                onClick={handleCancel}>
+                Cancel
+              </button>
             
         </div>
 </form>

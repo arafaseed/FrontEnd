@@ -18,10 +18,8 @@ export default function Header() {
                 </div>  
 
                 <div className='calender'>
-                      Date:Time<br/>
-                      Fri,7 June <br/>
-                      3:00          
-                </div>  
+   {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}<br/>
+  </div>
                
                 
                

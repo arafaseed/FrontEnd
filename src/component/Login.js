@@ -3,6 +3,7 @@ import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import PopFormCust from './Customer/PopFormCust';
+import logo  from '../Asset/smz.png';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -12,11 +13,12 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleAddButton = () => {
-    setShowModal(true); 
-  }
+    setShowModal(true);
+  };
+
   const handleAddModalClose = () => {
     setShowModal(false);
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,75 +26,78 @@ const Login = () => {
     try {
       const response = await axios.get(`http://localhost:8080/api/user/username/${username}`, {
         params: {
-          password: password 
-        }
-      })
-      
-        const user = response.data;
+          password: password,
+        },
+      });
 
-        localStorage.setItem('role', user.role);
-        localStorage.setItem('username', user.username);
-        localStorage.setItem('userId', user.userID);
+      const user = response.data;
 
-        if(user.role === "Admin"){
-          navigate("/dashbord")
-        }
+      localStorage.setItem('role', user.role);
+      localStorage.setItem('username', user.username);
+      localStorage.setItem('userId', user.userID);
 
-        if(user.role === "Staff"){
-          navigate("/staffdash")
-        }
-
-        if(user.role === "Customer" ){
-          navigate("/customeDashbord")
-        }
-      }catch (error) {
+      if (user.role === 'Admin') {
+        navigate('/dashbord');
+      } else if (user.role === 'Staff') {
+        navigate('/staffdash');
+      } else if (user.role === 'Customer') {
+        navigate('/customeDashbord');
+      }
+    } catch (error) {
       setError('Invalid username or password');
       console.error('login error', error);
     }
-
   };
 
-    
-  const handlePassword = (licence_id) => {
-    navigate(`/fogetPassword`);
+  const handleForgotPassword = () => {
+    navigate('/forgotPassword');
   };
 
   return (
     <div className="containe">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            id="username"
-            name="username"
-            required
-          />
+      <div className="login-form">
+      <p>
+          <img src={logo} style={{ width: '200px', height: '150px', marginLeft: 'auto',marginRight: 'auto',display: 'block' }} alt="logo" />
+      </p>
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              id="username"
+              name="username"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              id="password"
+              name="password"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <input type="submit" value="Login" />
+          </div>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+        </form>
+        <div className="links">
+          <p>
+            Don't have an account? <button type="button" className="btn btn-link" onClick={handleAddButton}>Sign Up</button>
+          </p>
+          <p>
+            Forgot password? <button type="button" className="btn btn-link" onClick={handleForgotPassword}>Reset</button>
+          </p>
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            id="password"
-            name="password"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <input type="submit" value="Login" />
-        </div>
-        {error && <p>{error}</p>}
-      </form>
-
-      Don't have account:<button type="button" className="btn btn-outline-primary ms-2"><a onClick={handleAddButton}>SIGN-UP</a></button><br/><br/>
-      Foget Password:<button type="button" className="btn btn-outline-primary ms-2"><a onClick={handlePassword}>Reset</a></button>
-
-      <PopFormCust showModal={showModal} handleModalClose={handleAddModalClose} />
+      </div>
+      {showModal && <PopFormCust showModal={showModal} handleModalClose={handleAddModalClose} />}
     </div>
   );
 };

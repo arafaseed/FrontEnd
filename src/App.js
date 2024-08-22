@@ -27,6 +27,10 @@ import UpdateApplication from './component/Admin/UpdateApplication';
 import UpdateCustomer from './component/Admin/UpdateCustomer';
 import UpdateStaff from './component/Admin/UpdateStaff';
 import FogetPassword from './component/Admin/FogetPassword';
+import ProtectingRoot from './component/ProtectingRoot';
+import CustomerReport from './component/Customer/CustomerReport';
+import Report from './component/Admin/Report';
+
 
 
 
@@ -40,8 +44,18 @@ function App() {
         
         <Route path='/' element={<Login/>}/>
         
-          //Admin
+
+        <Route path='/fogetPassword' element={<FogetPassword/>}/>
+        <Route path='/setting/:userID' element={<AccountSetting/>}/>
+        <Route path='/addStaff' element={<PopStaffForm/>}/>
+        <Route path='/addCustomer' element={<PopFormCust/>}/>           
           
+          //update Form
+          {/* <Route path='/updateApplication/:lecenceId' element={<UpdateApplication/>}/> */}
+          <Route path='/updateCustomer/:userID' element={<UpdateCustomer/>}/>
+          <Route path='/updateStaff/:userID' element={<UpdateStaff/>}/> 
+          //Admin
+        <Route element={<ProtectingRoot role="Admin"/>}>
           <Route path='/dashbord' element={<Dashbord/>}/> 
           <Route path='/staffList' element={<StaffList/>}/>    
           <Route path='/customerList' element={<CustomerList/>}/>   
@@ -49,44 +63,44 @@ function App() {
           <Route path='/license/:payment_id' element={<License/>}/>
           <Route path='/userAccount' element={<UserAccount/>}/>
           <Route path='/payment' element={<Payment/>}/> 
+          <Route path='/report' element={<Report/>}/>  
           
           //Form
                 
-          <Route path='/setting/:userID' element={<AccountSetting/>}/>
-          <Route path='/addStaff' element={<PopStaffForm/>}/>
-          <Route path='/addCustomer' element={<PopFormCust/>}/>           
-          <Route path='/paymentForm/:lecenceId' element={<Pay/>}/> 
-    
+         
 
-
-
-          //update Form
-          <Route path='/updateApplication/:lecenceId' element={<UpdateApplication/>}/>
-          <Route path='/updateCustomer/:userID' element={<UpdateCustomer/>}/>
-          <Route path='/updateStaff/:userID' element={<UpdateStaff/>}/>
-          <Route path='/fogetPassword' element={<FogetPassword/>}/>
-
-      {/* <Route path='/renew/:lecenceId' element={<RenewPayment/>}/>  */}
-          <Route path='/renew/:lecenceIds' element={<RenewLicense/>}/> 
-
-
-          //Map
-          {/* <Route path='/map' element={<MarkerClusterMap/>}/> */}
+        </Route>
           
-
+        <Route element={<ProtectingRoot role="Staff"/>}>
           //Staff
-          <Route path='/staffdash' element={<StaffDashbord/>}/>          
+          <Route path='/staffdash' element={<StaffDashbord/>}/>    
+          <Route path='/customerLists' element={<CustomerList/>}/>   
+          <Route path='/view-applications' element={<ViewApplication/>}/> 
+          <Route path='/license/:payment_id' element={<License/>}/>      
+          <Route path='/payments' element={<Payment/>}/> 
+          <Route path='/reports' element={<Report/>}/>  
+
+          //Form
+          <Route path='/addCustomer' element={<PopFormCust/>}/> 
+          <Route path='/updateCustomer/:userID' element={<UpdateCustomer/>}/>
           
-          
-          
+          </Route>
+
 
           //Customer   
-          
+        <Route element={<ProtectingRoot role="Customer"/>}>
+
           <Route path='/CustApplicationList' element={<CustApplicationList/>}/> 
           <Route path='/customeDashbord' element={<CustomerDashbord/>}/>
           <Route path='/customePayment' element={<CustomerPayment/>}/>
-                
-        </Routes>
+          <Route path='/customerReport' element={<CustomerReport/>}/>  
+          
+          //Form
+          <Route path='/license/:payment_id' element={<License/>}/>
+          <Route path='/paymentForm/:lecenceId' element={<Pay/>}/> 
+          <Route path='/renew/:lecenceIds' element={<RenewLicense/>}/> 
+        </Route>
+      </Routes>
    </BrowserRouter>
   );
 }

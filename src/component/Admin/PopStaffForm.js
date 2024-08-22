@@ -7,11 +7,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import Navigation from '../Admin/Navigation.';
 
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import { Modal,Button } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 
 export const PopStaffForm = ({ showModal, handleModalClose }) => {
-
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [gender, setGender] = useState('');
@@ -22,16 +20,16 @@ export const PopStaffForm = ({ showModal, handleModalClose }) => {
 
   const handleSubmits = (event) => {
     event.preventDefault();
-    const StaffData= {
-        name: name,
-        username: username,
-        gender: gender,
-        phone: phone,
-        status: status,
-        password:password,
-        role: "Staff"     
-       };
-   
+    const StaffData = {
+      name: name,
+      username: username,
+      gender: gender,
+      phone: phone,
+      status: status,
+      password: password,
+      role: "Staff"
+    };
+
     axios.post('http://localhost:8080/api/staff/addStaff', StaffData)
       .then(response => {
         console.log('Response:', response);
@@ -43,68 +41,65 @@ export const PopStaffForm = ({ showModal, handleModalClose }) => {
         console.error('Error:', error);
       })
   }
+
   return (
     <Modal show={showModal} onHide={handleModalClose}>
       <Modal.Header closeButton>
         <Modal.Title>Add Staff</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <form onSubmit={handleSubmits}>
-    <div className="row mb-3">
-        <div className="col-md-6">
-            <label className="form-label">Username</label>
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="form-control" placeholder="Enter your username" />
-        </div>
-        <div className="col-md-6">
-            <label className="form-label">Full Name</label>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" placeholder="Enter your Full Name" />
-        </div>
-    </div>
-    <div className="row mb-3">
-        <div className="col-md-6">
-            <label className="form-label">Gender: </label><br />
-            <label for="male">Male</label>
-            <input type="radio" value="Male" onChange={(e) => setGender(e.target.value)} />
-            <label for="female">Female</label>
-            <input type="radio" value="Female" onChange={(e) => setGender(e.target.value)} />
-        </div>
-        <div className="col-md-6">
-            <label className="form-label">Phone</label>
-            <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" placeholder="Enter your phone number" />
-        </div>
-    </div>
-    <div className="row mb-3">
-        <div className="col-md-6">
-        <label className="form-label">Select Status</label>
-              <select className="form-control" 
-              value={status} 
-              onChange={(e) => setStatus(e.target.value)} 
-              placeholder="Select Status" >
+        <form onSubmit={handleSubmits}>
+          <div className="row mb-3">
+            <div className="col-md-6">
+              <label className="form-label">Username</label>
+              <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="form-control" placeholder="Enter your username" required />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">Full Name</label>
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" placeholder="Enter your Full Name" required />
+            </div>
+          </div>
+          <div className="row mb-3">
+            <div className="col-md-6">
+              <label className="form-label">Gender: </label><br />
+              <label for="male">Male</label>
+              <input type="radio" value="Male" onChange={(e) => setGender(e.target.value)} required />
+              <label for="female">Female</label>
+              <input type="radio" value="Female" onChange={(e) => setGender(e.target.value)} required />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">Phone</label>
+              <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" placeholder="Enter your phone number" required />
+            </div>
+          </div>
+          <div className="row mb-3">
+            <div className="col-md-6">
+              <label className="form-label">Select Status</label>
+              <select className="form-control" value={status} onChange={(e) => setStatus(e.target.value)} placeholder="Select Status" required>
                 <option value="">Select Status</option>
                 <option value="Director">Director</option>
                 <option value="Manager">Manager</option>
-                
-              </select></div>
-              <div className="col-md-6">
-            <label className="form-label">Password</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" placeholder="Enter your password" />
-        </div>
-    </div>
-</form>
+              </select>
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">Password</label>
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" placeholder="Enter your password" required />
+            </div>
+          </div>
+        </form>
       </Modal.Body>
       <Modal.Footer>
-      <div className="d-flex justify-content-between">
-        <Button  variant="secondary" onClick={handleModalClose}>
-          Close
-        </Button>
-      
-    <Button variant="primary" onClick={(e) => {
-      handleSubmits(e);
-      handleModalClose();
-    }}>
-      Save
-    </Button>
-        </div> 
+        <div className="d-flex justify-content-between">
+          <Button variant="secondary" onClick={handleModalClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={(e) => {
+            handleSubmits(e);
+            handleModalClose();
+          }}>
+            Save
+          </Button>
+        </div>
       </Modal.Footer>
     </Modal>
   );

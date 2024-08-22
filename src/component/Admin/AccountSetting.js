@@ -50,6 +50,11 @@ export const AccountSetting = () => {
       });
   };
 
+
+  const handleCancel = () => {
+    navigate('/userAccount');
+  };
+
   return (
     <div>
       <Header />
@@ -76,7 +81,9 @@ export const AccountSetting = () => {
             <button type="button" className="btn btn-outline-primary ms-4" onClick={(e) => { handleSubmits(e) }}>
               Save
             </button>
-            <button type="button" className="btn btn-outline-danger ms-4" >cancel</button>
+            <button type="button" className="btn btn-outline-danger ms-4" onClick={handleCancel}>
+              Cancel
+            </button>
           </div>
         </div>
       </div>
