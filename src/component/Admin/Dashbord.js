@@ -54,11 +54,11 @@ const data = {
        <Header/>
        <Navigation/>
        <div className="container mt-4">
-                <div className="card mb-4 shadow-sm">
+                {/* <div className="card mb-4 shadow-sm">
                     <div className="card-body">
                         <h5 className="card-title"><i className="fa fa-user"></i>Customer Dashboard</h5>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="card mb-4 shadow-sm">
                     <div className="card-body">

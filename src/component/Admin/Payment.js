@@ -17,20 +17,7 @@ export default function Payment() {
       setLoading(true);
       try {
         const response = await axios.get('http://localhost:8080/api/payment/getallPayment');
-        const updatedData = response.data.map((item) => {
-          const endDate = new Date(item.license.endDate);
-          const currentDate = new Date();
-          if (endDate < currentDate) {
-            item.status = 'Renew';
-            axios.put(`http://localhost:8080/api/payment/updateStatus/${item.payment_id}`, item);
-          }
-          if (endDate > currentDate) {
-            item.status = 'Paid';
-            axios.put(`http://localhost:8080/api/payment/updateStatus/${item.payment_id}`, item);
-          }
-          return item;
-        });
-        setData(updatedData);
+        setData(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -40,7 +27,24 @@ export default function Payment() {
     fetchData();
   }, []);
 
-  //kupata leseni kutokana na ID
+  useEffect(() => {
+    const updatePaymentStatus = async () => {
+      const currentDate = new Date();
+      data.forEach((item) => {
+        const endDate = new Date(item.license.endDate);
+        if (endDate < currentDate && item.status !== 'Renew') {
+          item.status = 'Renew';
+          axios.put(`http://localhost:8080/api/payment/updateStatus/${item.payment_id}`, item);
+        } else if (endDate > currentDate && item.status !== 'Paid') {
+          item.status = 'Paid';
+          axios.put(`http://localhost:8080/api/payment/updateStatus/${item.payment_id}`, item);
+        }
+      });
+    };
+    const intervalId = setInterval(updatePaymentStatus, 60000); // update every 1 minute
+    return () => clearInterval(intervalId);
+  }, [data]);
+
   const handleLicense = (payment_id) => {
     navigate(`/license/${payment_id}`);
   };
