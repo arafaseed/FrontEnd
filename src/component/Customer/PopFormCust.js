@@ -15,8 +15,15 @@ export const PopFormCust = ({ showModal, handleModalClose }) => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+
   const handleSubmits = (event) => {
     event.preventDefault();
+    if (!username || !name || !gender || !phone || !zan_Id || !address || !password) {
+      alert("Please fill out all required fields.");
+      return;
+    }
+   
+
     const customerData = {
       name: name,
       username: username,

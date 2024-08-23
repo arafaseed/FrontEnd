@@ -81,9 +81,6 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (!validateForm()) {
-      return;
-    }
 
     const requestData = {
       licence_id: licenceId,
