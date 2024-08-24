@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Login.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import PopFormCust from './Customer/PopFormCust';
 import logo  from '../Asset/smz.png';
@@ -48,6 +48,15 @@ const Login = () => {
       console.error('login error', error);
     }
   };
+  const location = useLocation();
+  useEffect(()  =>{
+    if (location.pathname ==='/'){
+      localStorage.removeItem('role');
+      localStorage.removeItem('username');
+      localStorage.removeItem('userId');
+      
+    }
+  },[location]);
 
   const handleForgotPassword = () => {
     navigate('/forgotPassword');

@@ -49,20 +49,21 @@ const data = {
       borderWidth: 1
     }]
   };
+
   return (
     <div>
        <Header/>
        <Navigation/>
-       <div className="container mt-4">
+       <div className="container mt-0">
                 {/* <div className="card mb-4 shadow-sm">
                     <div className="card-body">
                         <h5 className="card-title"><i className="fa fa-user"></i>Customer Dashboard</h5>
                     </div>
                 </div> */}
 
-                <div className="card mb-4 shadow-sm">
+                <div className="card shadow-sm">
                     <div className="card-body">
-                        <h5 className="card-title"><i className="fa fa-cogs"></i> Application Service</h5>
+                        {/* <h5 className="card-title"><i className="fa fa-cogs"></i> Application Service</h5> */}
                         <div className="row">
                             <div className="col-md-3 profile">
                                 <p className="title">Total Applications</p>
@@ -86,7 +87,23 @@ const data = {
                 <div className="card mb-4 shadow-sm">
           <div className="card-body">
             <h5 className="card-title"><i className="fa fa-chart-bar"></i> Application Graph</h5>
-            <Bar data={data} />
+            <Bar
+              data={data}
+              width={320} // adjust the width
+              height={120} // adjust the height
+              options={{
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    ticks: {
+                      stepSize: 0.25,
+                      min: 0,
+                      max: 2 // adjust this value to reduce the scale
+                    }
+                  }
+                }
+              }}
+            />
           </div>
         </div>
             </div>

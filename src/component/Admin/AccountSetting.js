@@ -52,7 +52,7 @@ export const AccountSetting = () => {
 
 
   const handleCancel = () => {
-    navigate('/userAccount');
+    navigate(-1);
   };
 
   return (

@@ -61,7 +61,7 @@ import Navigation from './Navigation.';
     };
   
     const handleCancel = () => {
-      navigate('/customerLists');
+      navigate(-1);
     };
   
     return (

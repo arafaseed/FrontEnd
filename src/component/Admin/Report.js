@@ -53,7 +53,7 @@ export const Report = () => {
       });
   }, []);
 
-  const handlePrint = () => {
+  const handlePrint = (saveAsPdf = false) => {
     const input = printRef.current;
     html2canvas(input, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
@@ -62,7 +62,12 @@ export const Report = () => {
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save('report.pdf');
+      if (saveAsPdf) {
+        pdf.save('report.pdf');
+      } else {
+        // Print the report (default behavior)
+        window.open(pdf.output('bloburl'), '_blank');
+      }
     });
   };
 
@@ -96,7 +101,7 @@ export const Report = () => {
             </table>
             <div className="mt-4">
               <h6>Summary:</h6>
-              <p>Total Applications: {statusCounts.total}</p>
+              <p>Total Complete Applications: {statusCounts.total}</p>
               {/* <p>Pending Applications: {statusCounts.pending}</p> */}
               <p>Accepted Applications: {statusCounts.accepted}</p>
               <p>Canceled Applications: {statusCounts.canceled}</p>
@@ -108,6 +113,9 @@ export const Report = () => {
       </div>
       <button type="button" className="btn btn-outline-primary ms-4" onClick={handlePrint}>
         <i className="fa fa-print"></i> Print Report
+      </button>
+      <button type="button" className="btn btn-outline-success ms-4" onClick={() => handlePrint(true)}>
+        <i className="fa fa-file-pdf"></i> Get PDF
       </button>
     </div>
   );

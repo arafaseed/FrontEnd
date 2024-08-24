@@ -65,7 +65,7 @@ const UpdateStaff = () => {
 
 
   const handleCancel = () => {
-    navigate('/staffLists');
+    navigate(-1);
   }
   return (
     <div>

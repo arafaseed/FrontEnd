@@ -27,6 +27,7 @@ export default function CustomerDashbord() {
         setAcceptApp(filteracceptApp.length);
         setCancelApp(filtercancelApp.length);
     })
+    .catch(console.error)
 }, [])
 
 const data = {

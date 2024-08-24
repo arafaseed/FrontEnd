@@ -1,8 +1,5 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import Header from '../Header';
-import Navigation from '../Admin/Navigation.';
 import { Modal, Button } from 'react-bootstrap';
 
 export const PopFormCust = ({ showModal, handleModalClose }) => {
@@ -13,38 +10,53 @@ export const PopFormCust = ({ showModal, handleModalClose }) => {
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
 
-
-  const handleSubmits = (event) => {
+  const handleSubmits = async (event) => {
     event.preventDefault();
+  
     if (!username || !name || !gender || !phone || !zan_Id || !address || !password) {
       alert("Please fill out all required fields.");
       return;
     }
-   
-
-    const customerData = {
-      name: name,
-      username: username,
-      zan_Id: zan_Id,
-      gender: gender,
-      phone: phone,
-      address: address,
-      password: password,
-      role: "Customer"
-    };
-    axios.post('http://localhost:8080/api/customer/addCustomer', customerData)
-      .then(response => {
-        console.log('Response:', response);
-        console.log('Response data:', response.data);
-        // navigate("/")
-        // alert("Customer Created Successfull")
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      })
-  }
+  
+    try {
+      const usernameResponse = await axios.get(`http://localhost:8080/api/user/${username}`);
+      if (usernameResponse.status === 200 && usernameResponse.data === "Username already exists") {
+        alert("Username already exists. Please choose another username.");
+        return;
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        // If username does not exist (404), proceed to add the customer
+        const customerData = {
+          name: name,
+          username: username,
+          zan_Id: zan_Id,
+          gender: gender,
+          phone: phone,
+          address: address,
+          password: password,
+          role: "Customer"
+        };
+  
+        try {
+          const response = await axios.post('http://localhost:8080/api/customer/addCustomer', customerData);
+          console.log('Response:', response);
+          console.log('Response data:', response.data);
+          alert("Customer Created Successfully");
+          
+          handleModalClose();
+        } catch (error) {
+          console.error('Error adding customer:', error);
+          alert("Something went wrong. Please try again.");
+        }
+      } else {
+        console.error('Error checking username:', error);
+        alert("Something went wrong while checking the username. Please try again.");
+      }
+    }
+  };
+  
 
   return (
     <Modal show={showModal} onHide={handleModalClose}>
@@ -66,10 +78,10 @@ export const PopFormCust = ({ showModal, handleModalClose }) => {
           <div className="row mb-3">
             <div className="col-md-6">
               <label className="form-label">Gender: </label><br />
-              <label for="male">Male</label>
-              <input type="radio" value="Male" onChange={(e) => setGender(e.target.value)} />
-              <label for="female">Female</label>
-              <input type="radio" value="Female" onChange={(e) => setGender(e.target.value)} />
+              <label htmlFor="male">Male</label>
+              <input type="radio" value="Male" name="gender" onChange={(e) => setGender(e.target.value)} />
+              <label htmlFor="female">Female</label>
+              <input type="radio" value="Female" name="gender" onChange={(e) => setGender(e.target.value)} />
             </div>
           </div>
           <div className="row mb-3">
@@ -101,7 +113,6 @@ export const PopFormCust = ({ showModal, handleModalClose }) => {
           </Button>
           <Button variant="primary" onClick={(e) => {
             handleSubmits(e);
-            handleModalClose();
           }}>
             Save
           </Button>

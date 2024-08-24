@@ -35,7 +35,7 @@ p a{
 .navigations{
   position: absolute;  
   width: 19%;
-  height: 800px;
+  height: 720px;
   /* background-color:rgb(23, 120, 184); */
   background-color: #041206;
   float: left;
@@ -125,10 +125,11 @@ li a{
   text-align: center;
   padding: 5px;
   border: 1px solid #ddd;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   border-radius: 8px;
   background-color: #f9f9f9;
   transition: background-color 0.3s ease;
+  
 }
 
 .profile:hover {

@@ -106,7 +106,7 @@ export const CustomerApplicationForm = ({ showModal, handleModalClose }) => {
         console.log('Response data:', response.data);
         alert("Successful");
         handleModalClose(); // Close the modal only on success
-        // navigate("/");
+        navigate("/CustApplicationList");
       })
       .catch((error) => {
         console.error('Error:', error);
