@@ -84,12 +84,12 @@ const data = {
                         </div>
                     </div>
                 </div>
-                <div className="card mb-4 shadow-sm">
+                {/* <div className="card mb-4 shadow-sm">
           <div className="card-body">
             <h5 className="card-title"><i className="fa fa-chart-bar"></i> Application Graph</h5>
             <Bar data={data} />
           </div>
-        </div>
+        </div> */}
             </div>
         </div>
   )

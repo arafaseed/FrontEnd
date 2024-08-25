@@ -17,12 +17,12 @@ export default function Dashbord() {
   useEffect(()=>{
     axios.get('http://localhost:8080/api/licence/getallLicense')
     .then((response)=>{
-        const filterAll = response.data.filter(item => item);
+        // const filterAll = response.data.length;
         const filterPend = response.data.filter(item =>  item.status === 'Pending');
         const filteracceptApp = response.data.filter(item =>  item.status === 'Accepted');
         const filtercancelApp = response.data.filter(item =>  item.status === 'Cancel');
         
-        setAllApp(filterAll.length);
+        setAllApp(response.data.length);
         setPendApp(filterPend.length);
         setAcceptApp(filteracceptApp.length);
         setCancelApp(filtercancelApp.length);

@@ -37,10 +37,15 @@ const Login = () => {
       localStorage.setItem('userId', user.userID);
 
       if (user.role === 'Admin') {
+        alert("Login successfully");
         navigate('/dashbord');
+        
       } else if (user.role === 'Staff') {
+        alert("Login successfully");
         navigate('/staffdash');
+        
       } else if (user.role === 'Customer') {
+        alert("Login successfully");
         navigate('/customeDashbord');
       }
     } catch (error) {
